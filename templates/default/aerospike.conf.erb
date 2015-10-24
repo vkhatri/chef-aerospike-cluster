@@ -1,0 +1,22 @@
+#
+# This file is managed by Chef.
+# Do NOT modify this file directly.
+#
+
+service {
+<%= as_config_generator(@config['service']) %>
+}
+
+logging {
+<%= as_config_generator(@config['logging']) %>
+}
+
+network {
+<%= as_config_generator(@config['network']) %>
+}
+
+<% @config['namespace'].each do |name, options| %>
+namespace <%= name %> {
+<%= as_config_generator(options) %>
+}
+<% end %>
