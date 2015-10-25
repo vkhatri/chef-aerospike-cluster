@@ -1,7 +1,7 @@
 aerospike-cluster Cookbook
 ================
 
-[![Build Status](https://travis-ci.org/vkhatri/chef-aerospike-cluster.svg?branch=master)](https://travis-ci.org/vkhatri/chef-aerospike-cluster)
+[![Cookbook](http://img.shields.io/badge/cookbook-v0.1.0-green.svg)](https://github.com/vkhatri/chef-aerospike-cluster)[![Build Status](https://travis-ci.org/vkhatri/chef-aerospike-cluster.svg?branch=master)](https://travis-ci.org/vkhatri/chef-aerospike-cluster)
 
 This is a [Chef] cookbook to manage [Aerospike].
 
@@ -31,6 +31,7 @@ Currently cookbook only supports Aerospike `tarball` installtion. `Package` inst
 - add support for `enterprise` edition
 - add `package` installation
 - add `specs`
+- manage aerospike `dependencies`, e.g. python-bcrypt etc.
 - add `role` examples
 
 

@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: aerospike-cluster
-# Recipe:: install
+# Recipe:: dependency
 #
 # Copyright 2015, Virender Khatri
 #
@@ -17,10 +17,4 @@
 # limitations under the License.
 #
 
-fail "invalid value for node attribute node['aerospike']['install_method'], valid are 'tarball'" unless %w(tarball).include?(node['aerospike']['install_method'])
-
-fail "invalid value for node attribute node['aerospike']['install_edition'], valid are 'community'" unless %w(community).include?(node['aerospike']['install_edition'])
-
-include_recipe 'aerospike-cluster::dependency'
-
-include_recipe "aerospike-cluster::#{node['aerospike']['install_method']}"
+# TODO: add package dependency
