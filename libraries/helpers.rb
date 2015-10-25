@@ -6,9 +6,11 @@ def as_config_generator(object, intend = 2)
   fail "expecting a Hash, but got '#{object.inspect}'" unless object.is_a?(Hash)
   data = ''
   object.each do |key, value|
-    if key == 'mesh-seed-address-port'
-      value.each do |server|
-        data << line_intend(intend) + 'mesh-seed-address-port' + ' ' + server + "\n"
+    if %w(mesh-seed-address-port device).include?(key)
+      fail "expecting an Array for attribute #{key}" unless value.is_a?(Array)
+      # array attributes
+      value.uniq.each do |v|
+        data << line_intend(intend) + key + ' ' + v + "\n"
       end
       next
     end

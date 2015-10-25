@@ -11,6 +11,18 @@ logging {
 <%= as_config_generator(@config['logging']) %>
 }
 
+mod-lua {
+<%= as_config_generator(@config['mod-lua']) %>
+}
+
+xdr {
+<%= as_config_generator(@config['xdr']) %>
+}
+
+cluster {
+<%= as_config_generator(@config['cluster']) %>
+}
+
 network {
 <%= as_config_generator(@config['network']) %>
 }

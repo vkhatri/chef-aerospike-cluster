@@ -19,12 +19,18 @@
 
 [node['aerospike']['conf_dir'],
  node['aerospike']['log_dir'],
- node['aerospike']['data_dir']
+ node['aerospike']['work_dir'],
+ node['aerospike']['data_dir'],
+ node['aerospike']['smd_dir'],
+ node['aerospike']['config']['mod-lua']['user-path'],
+ node['aerospike']['config']['mod-lua']['system-path'],
+ node['aerospike']['config']['service']['work-directory']
 ].each do |d|
   directory d do
     owner node['aerospike']['user']
     group node['aerospike']['group']
     mode node['aerospike']['mode']
+    recursive true
   end
 end
 

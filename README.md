@@ -13,7 +13,26 @@ https://github.com/vkhatri/chef-aerospike-cluster
 
 ## Supported OS
 
-This cookbook was tested on Amazon Linux and expected to work on other RHEL platforms.
+This cookbook was tested on Amazon Linux & Ubuntu 14.04 and expected to work on other RHEL platforms.
+
+
+## Supported Edition
+
+Currently cookbook only supports Aerospike `Community` edition. `Enterprise` edition support will be added over time.
+
+
+## Installation Method
+
+Currently cookbook only supports Aerospike `tarball` installtion. `Package` installation will be added soon.
+
+
+## TODO
+
+- add support for `enterprise` edition
+- add `package` installation
+- add `specs`
+- add `role` examples
+
 
 
 ## Recipes
@@ -78,13 +97,112 @@ This cookbook was tested on Amazon Linux and expected to work on other RHEL plat
 * `default['aerospike']['mode']` (default: `0755`): file directory default permission
 
 
+
 ## Configuration File aerospike.conf Attributes
 
 * `default['aerospike']['config_attribute']` (default: `config`): aerospike configuration node attribute
 
+>> Note: `aerospike.conf` is dynamically generated and few of the attributes are managed differently, like `default['aerospike']['config']['service']['logging']['file <calculated log file /var/log/aerospike/aerospike.log']['context']`, `default['aerospike']['config']['network']['heartbeat']['mesh-seed-address-port']` and `default['aerospike']['config']['namespace']['test']['storage-engine device']['scheduler-mode']`. Please check out helper method `as_config_generator` for more details.
+
+
+### Configuration File aerospike.conf service {} Attributes
+
+
 * `default['aerospike']['config']['service']['user']` (default: `root`): aerospike configuration attribute
 
-...
+* `default['aerospike']['config']['service']['group']` (default: `root`): aerospike configuration attribute
+
+* `default['aerospike']['config']['service']['paxos-single-replica-limit']` (default: `1`): aerospike configuration attribute
+
+* `default['aerospike']['config']['service']['pidfile']` (default: `/var/run/aerospike/asd.pid`): aerospike configuration attribute
+
+* `default['aerospike']['config']['service']['service-threads']` (default: `4`): aerospike configuration attribute
+
+* `default['aerospike']['config']['service']['transaction-queues']` (default: `4`): aerospike configuration attribute
+
+* `default['aerospike']['config']['service']['transaction-threads-per-queue']` (default: `4`): aerospike configuration attribute
+
+* `default['aerospike']['config']['service']['proto-fd-max']` (default: `15000`): aerospike configuration attribute
+
+
+### Configuration File aerospike.conf logging {} Attributes
+
+* `default['aerospike']['config']['logging']['file config_log_file']['context']` (default: `any info`): aerospike log file context
+
+>> `config_log_file` location is calculated dynamically
+
+
+### Configuration File aerospike.conf mod-lua {} Attributes
+
+* `default['aerospike']['config']['mod-lua']['user-path']` (default: `/opt/aerospike/usr/udf/lua`): aerospike mod-lua attribute
+
+* `default['aerospike']['config']['mod-lua']['system-path']` (default: `/opt/aerospike/sys/udf/lua`): aerospike mod-lua attribute
+
+
+### Configuration File aerospike.conf network {} Attributes
+
+
+* `default['aerospike']['config']['network']['service']['address']` (default: `any`): aerospike configuration attribute
+
+* `default['aerospike']['config']['network']['service']['port']` (default: `3000`): aerospike configuration attribute
+
+* `default['aerospike']['config']['network']['heartbeat']['mode']` (default: `mesh`): aerospike configuration attribute
+
+* `default['aerospike']['config']['network']['heartbeat']['address']` (default: `node['ipaddress']`): aerospike configuration attribute
+
+* `default['aerospike']['config']['network']['heartbeat']['port']` (default: `3002`): aerospike configuration attribute
+
+* `default['aerospike']['config']['network']['heartbeat']['mesh-seed-address-port']` (default: `[]`): aerospike unicast cluster seed ip addresses
+
+>> as `mesh-seed-address-port` accepts multiple values, variable type is set to `Array` and parameter is rendered differently in helper method `as_config_generator`
+
+
+* `default['aerospike']['config']['network']['heartbeat']['interval']` (default: `150`): aerospike configuration attribute
+
+* `default['aerospike']['config']['network']['heartbeat']['timeout']` (default: `10`): aerospike configuration attribute
+
+* `default['aerospike']['config']['network']['fabric']['port']` (default: `3001`): aerospike configuration attribute
+
+* `default['aerospike']['config']['network']['heartbeat']['info']` (default: `3003`): aerospike configuration attribute
+
+
+### Configuration File aerospike.conf namespace {} Attributes
+
+>> namespace configuration can be added to `aerospike.conf` configuration file via attribute `default['aerospike']['config']['namespace']['NAMESPACE_NAME']['option'] = value`. By default,  a namespace `test` is added to the configuration. Below are the default options for `test` namespace.
+
+* `default['aerospike']['config']['namespace']['test']['replication-factor']` (default: `1`): aerospike namespace configuration attribute
+
+* `default['aerospike']['config']['namespace']['test']['memory-size']` (default: `1M`): aerospike namespace configuration attribute
+
+* `default['aerospike']['config']['namespace']['test']['default-ttl']` (default: `1h`): aerospike namespace configuration attribute
+
+
+##### Configure Memory Storage Engine
+
+* `default['aerospike']['config']['namespace']['test']['storage-engine']` (default: `memory`): aerospike namespace configuration attribute
+
+
+##### Configure SSD Device Storage Engine
+
+* `default['aerospike']['config']['namespace']['test']['storage-engine device']['device']` (default: `['/dev/xvdb', 'dev/xvdc']`): aerospike namespace configuration attribute
+
+* `default['aerospike']['config']['namespace']['test']['storage-engine device']['write-block-size']` (default: `128k`): aerospike namespace configuration attribute
+
+* `default['aerospike']['config']['namespace']['test']['storage-engine device']['data-in-memory']` (default: `true`): aerospike namespace configuration attribute
+
+
+##### Configure HDD Device Storage Engine
+
+* `default['aerospike']['config']['namespace']['test']['storage-engine device']['file']` (default: `/var/lib/aerospike/test.ns`): aerospike namespace configuration attribute
+
+* `default['aerospike']['config']['namespace']['test']['storage-engine device']['filesize']` (default: `1G`): aerospike namespace configuration attribute
+
+* `default['aerospike']['config']['namespace']['test']['storage-engine device']['scheduler-mode']` (default: `noop`): aerospike namespace configuration attribute
+
+* `default['aerospike']['config']['namespace']['test']['storage-engine device']['data-in-memory']` (default: `true`): aerospike namespace configuration attribute
+
+
+
 
 ## Contributing
 

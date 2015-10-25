@@ -14,9 +14,8 @@ default['aerospike']['setup_user']    = true # for tarball install
 
 default['aerospike']['conf_dir']      = '/etc/aerospike'
 default['aerospike']['conf_file']     = ::File.join(node['aerospike']['conf_dir'], 'aerospike.conf')
-default['aerospike']['data_dir']      = '/var/lib/aerospike'
 default['aerospike']['log_dir']       = '/var/log/aerospike'
-default['aerospike']['log_file']      = ::File.join(node['aerospike']['log_dir'], 'aerospike.log')
+default['aerospike']['work_dir']      = '/opt/aerospike'
 
 # source install directory locations
 default['aerospike']['parent_dir'] = '/usr/local/aerospike'

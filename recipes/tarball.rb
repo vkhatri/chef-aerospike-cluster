@@ -86,7 +86,7 @@ end
 # sysv init file
 template '/etc/init.d/aerospike' do
   cookbook node['aerospike']['cookbook']
-  source "initd.#{node['platform_family']}.erb"
+  source 'initd.erb'
   owner 'root'
   group 'root'
   mode 0750
