@@ -1,0 +1,280 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Chef Aerospike by vkhatri</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/vkhatri/chef-aerospike-cluster">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/vkhatri/chef-aerospike-cluster/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/vkhatri/chef-aerospike-cluster/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Chef Aerospike</h1>
+          <p>Chef cookbook to Manage Aerospike</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/vkhatri">vkhatri</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a id="aerospike-cluster-cookbook" class="anchor" href="#aerospike-cluster-cookbook" aria-hidden="true"><span class="octicon octicon-link"></span></a>aerospike-cluster Cookbook</h1>
+
+<p><a href="https://github.com/vkhatri/chef-aerospike-cluster"><img src="http://img.shields.io/badge/cookbook-v0.1.0-green.svg" alt="Cookbook"></a><a href="https://travis-ci.org/vkhatri/chef-aerospike-cluster"><img src="https://travis-ci.org/vkhatri/chef-aerospike-cluster.svg?branch=master" alt="Build Status"></a></p>
+
+<p>This is a <a href="https://www.chef.io/">Chef</a> cookbook to manage <a href="http://www.aerospike.com/">Aerospike</a>.</p>
+
+<h2>
+<a id="repository" class="anchor" href="#repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>Repository</h2>
+
+<p><a href="https://github.com/vkhatri/chef-aerospike-cluster">https://github.com/vkhatri/chef-aerospike-cluster</a></p>
+
+<h2>
+<a id="supported-os" class="anchor" href="#supported-os" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported OS</h2>
+
+<p>This cookbook was tested on Amazon Linux &amp; Ubuntu 14.04 and expected to work on other RHEL platforms.</p>
+
+<h2>
+<a id="supported-edition" class="anchor" href="#supported-edition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported Edition</h2>
+
+<p>Currently cookbook only supports Aerospike <code>Community</code> edition. <code>Enterprise</code> edition support will be added over time.</p>
+
+<h2>
+<a id="installation-method" class="anchor" href="#installation-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation Method</h2>
+
+<p>Currently cookbook only supports Aerospike <code>tarball</code> installtion. <code>Package</code> installation will be added soon.</p>
+
+<h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>TODO</h2>
+
+<ul>
+<li>add support for <code>enterprise</code> edition</li>
+<li>add <code>package</code> installation</li>
+<li>add <code>specs</code>
+</li>
+<li>manage aerospike <code>dependencies</code>, e.g. python-bcrypt etc.</li>
+<li>add <code>role</code> examples</li>
+</ul>
+
+<h2>
+<a id="recipes" class="anchor" href="#recipes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Recipes</h2>
+
+<ul>
+<li><p><code>aerospike-cluster::default</code> - default recipe (use it for run_list)</p></li>
+<li><p><code>aerospike-cluster::attributes</code> - aerospike derived attributes</p></li>
+<li><p><code>aerospike-cluster::install</code> - install aerospike</p></li>
+<li><p><code>aerospike-cluster::user</code> - setup aerospike user</p></li>
+<li><p><code>aerospike-cluster::tarball</code> - aerospike tarball installation</p></li>
+<li><p><code>aerospike-cluster::package</code> - aerospike package installation</p></li>
+<li><p><code>aerospike-cluster::config</code> - configure aerospike</p></li>
+</ul>
+
+<h2>
+<a id="advanced-attributes" class="anchor" href="#advanced-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advanced Attributes</h2>
+
+<ul>
+<li><p><code>default['aerospike']['version']</code> (default: <code>3.6.3</code>): aerospike version</p></li>
+<li><p><code>default['aerospike']['tarball_url']</code> (default: <code>auto</code>): aerospike tarball url</p></li>
+<li><p><code>default['aerospike']['notify_restart']</code> (default: <code>true</code>): whether to restart aerospike service on configuration file change</p></li>
+<li><p><code>default['aerospike']['install_method']</code> (default: <code>tarball</code>): aerospike install method, options: tarball</p></li>
+<li><p><code>default['aerospike']['install_edition']</code> (default: <code>community</code>): aerospike edition, options: community</p></li>
+<li><p><code>default['aerospike']['tarball_purge']</code> (default: <code>false</code>): whether to purge old tarball versions</p></li>
+<li><p><code>default['aerospike']['cookbook']</code> (default: <code>aerospike-cluster</code>): whether to purge old tarball versions</p></li>
+</ul>
+
+<h2>
+<a id="core-attributes" class="anchor" href="#core-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Core Attributes</h2>
+
+<ul>
+<li><p><code>default['aerospike']['user']</code> (default: <code>user</code>): aerospike user name</p></li>
+<li><p><code>default['aerospike']['group']</code> (default: <code>user</code>): aerospike group name</p></li>
+<li><p><code>default['aerospike']['setup_user']</code> (default: <code>true</code>): setup aerospike user for tarball install method</p></li>
+<li><p><code>default['aerospike']['conf_dir']</code> (default: <code>/etc/aerospike</code>): aerospike yaml configuration file directory</p></li>
+<li><p><code>default['aerospike']['conf_file']</code> (default: <code>/etc/aerospike/aerospike.conf</code>): aerospike configuration file</p></li>
+<li><p><code>default['aerospike']['log_dir']</code> (default: <code>/var/log/aerospike</code>): aerospike log file directory</p></li>
+<li><p><code>default['aerospike']['log_file']</code> (default: <code>/var/log/aerospike/aerospike.log</code>): aerospike log file</p></li>
+<li><p><code>default['aerospike']['data_dir']</code> (default: <code>/var/lib/aerospike</code>): aerospike data directory</p></li>
+<li><p><code>default['aerospike']['parent_dir']</code> (default: <code>/usr/local/aerospike</code>): aerospike tarball setup directory</p></li>
+<li><p><code>default['aerospike']['service_action']</code> (default: <code>[:enable, :restart]</code>): aerospike service resource action</p></li>
+<li><p><code>default['aerospike']['umask']</code> (default: <code>0022</code>): umask for execute resource</p></li>
+<li><p><code>default['aerospike']['mode']</code> (default: <code>0755</code>): file directory default permission</p></li>
+</ul>
+
+<h2>
+<a id="configuration-file-aerospikeconf-attributes" class="anchor" href="#configuration-file-aerospikeconf-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration File aerospike.conf Attributes</h2>
+
+<ul>
+<li>
+<code>default['aerospike']['config_attribute']</code> (default: <code>config</code>): aerospike configuration node attribute</li>
+</ul>
+
+<blockquote>
+<blockquote>
+<p>Note: <code>aerospike.conf</code> is dynamically generated and few of the attributes are managed differently, like <code>default['aerospike']['config']['service']['logging']['file &lt;calculated log file /var/log/aerospike/aerospike.log']['context']</code>, <code>default['aerospike']['config']['network']['heartbeat']['mesh-seed-address-port']</code> and <code>default['aerospike']['config']['namespace']['test']['storage-engine device']['scheduler-mode']</code>. Please check out helper method <code>as_config_generator</code> for more details.</p>
+</blockquote>
+</blockquote>
+
+<h3>
+<a id="configuration-file-aerospikeconf-service--attributes" class="anchor" href="#configuration-file-aerospikeconf-service--attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration File aerospike.conf service {} Attributes</h3>
+
+<ul>
+<li><p><code>default['aerospike']['config']['service']['user']</code> (default: <code>root</code>): aerospike configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['service']['group']</code> (default: <code>root</code>): aerospike configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['service']['paxos-single-replica-limit']</code> (default: <code>1</code>): aerospike configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['service']['pidfile']</code> (default: <code>/var/run/aerospike/asd.pid</code>): aerospike configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['service']['service-threads']</code> (default: <code>4</code>): aerospike configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['service']['transaction-queues']</code> (default: <code>4</code>): aerospike configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['service']['transaction-threads-per-queue']</code> (default: <code>4</code>): aerospike configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['service']['proto-fd-max']</code> (default: <code>15000</code>): aerospike configuration attribute</p></li>
+</ul>
+
+<h3>
+<a id="configuration-file-aerospikeconf-logging--attributes" class="anchor" href="#configuration-file-aerospikeconf-logging--attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration File aerospike.conf logging {} Attributes</h3>
+
+<ul>
+<li>
+<code>default['aerospike']['config']['logging']['file config_log_file']['context']</code> (default: <code>any info</code>): aerospike log file context</li>
+</ul>
+
+<blockquote>
+<blockquote>
+<p><code>config_log_file</code> location is calculated dynamically</p>
+</blockquote>
+</blockquote>
+
+<h3>
+<a id="configuration-file-aerospikeconf-mod-lua--attributes" class="anchor" href="#configuration-file-aerospikeconf-mod-lua--attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration File aerospike.conf mod-lua {} Attributes</h3>
+
+<ul>
+<li><p><code>default['aerospike']['config']['mod-lua']['user-path']</code> (default: <code>/opt/aerospike/usr/udf/lua</code>): aerospike mod-lua attribute</p></li>
+<li><p><code>default['aerospike']['config']['mod-lua']['system-path']</code> (default: <code>/opt/aerospike/sys/udf/lua</code>): aerospike mod-lua attribute</p></li>
+</ul>
+
+<h3>
+<a id="configuration-file-aerospikeconf-network--attributes" class="anchor" href="#configuration-file-aerospikeconf-network--attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration File aerospike.conf network {} Attributes</h3>
+
+<ul>
+<li><p><code>default['aerospike']['config']['network']['service']['address']</code> (default: <code>any</code>): aerospike configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['network']['service']['port']</code> (default: <code>3000</code>): aerospike configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['network']['heartbeat']['mode']</code> (default: <code>mesh</code>): aerospike configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['network']['heartbeat']['address']</code> (default: <code>node['ipaddress']</code>): aerospike configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['network']['heartbeat']['port']</code> (default: <code>3002</code>): aerospike configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['network']['heartbeat']['mesh-seed-address-port']</code> (default: <code>[]</code>): aerospike unicast cluster seed ip addresses</p></li>
+</ul>
+
+<blockquote>
+<blockquote>
+<p>as <code>mesh-seed-address-port</code> accepts multiple values, variable type is set to <code>Array</code> and parameter is rendered differently in helper method <code>as_config_generator</code></p>
+</blockquote>
+</blockquote>
+
+<ul>
+<li><p><code>default['aerospike']['config']['network']['heartbeat']['interval']</code> (default: <code>150</code>): aerospike configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['network']['heartbeat']['timeout']</code> (default: <code>10</code>): aerospike configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['network']['fabric']['port']</code> (default: <code>3001</code>): aerospike configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['network']['heartbeat']['info']</code> (default: <code>3003</code>): aerospike configuration attribute</p></li>
+</ul>
+
+<h3>
+<a id="configuration-file-aerospikeconf-namespace--attributes" class="anchor" href="#configuration-file-aerospikeconf-namespace--attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration File aerospike.conf namespace {} Attributes</h3>
+
+<blockquote>
+<blockquote>
+<p>namespace configuration can be added to <code>aerospike.conf</code> configuration file via attribute <code>default['aerospike']['config']['namespace']['NAMESPACE_NAME']['option'] = value</code>. By default,  a namespace <code>test</code> is added to the configuration. Below are the default options for <code>test</code> namespace.</p>
+</blockquote>
+</blockquote>
+
+<ul>
+<li><p><code>default['aerospike']['config']['namespace']['test']['replication-factor']</code> (default: <code>1</code>): aerospike namespace configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['namespace']['test']['memory-size']</code> (default: <code>1M</code>): aerospike namespace configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['namespace']['test']['default-ttl']</code> (default: <code>1h</code>): aerospike namespace configuration attribute</p></li>
+</ul>
+
+<h5>
+<a id="configure-memory-storage-engine" class="anchor" href="#configure-memory-storage-engine" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configure Memory Storage Engine</h5>
+
+<ul>
+<li>
+<code>default['aerospike']['config']['namespace']['test']['storage-engine']</code> (default: <code>memory</code>): aerospike namespace configuration attribute</li>
+</ul>
+
+<h5>
+<a id="configure-ssd-device-storage-engine" class="anchor" href="#configure-ssd-device-storage-engine" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configure SSD Device Storage Engine</h5>
+
+<ul>
+<li><p><code>default['aerospike']['config']['namespace']['test']['storage-engine device']['device']</code> (default: <code>['/dev/xvdb', 'dev/xvdc']</code>): aerospike namespace configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['namespace']['test']['storage-engine device']['write-block-size']</code> (default: <code>128k</code>): aerospike namespace configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['namespace']['test']['storage-engine device']['data-in-memory']</code> (default: <code>true</code>): aerospike namespace configuration attribute</p></li>
+</ul>
+
+<h5>
+<a id="configure-hdd-device-storage-engine" class="anchor" href="#configure-hdd-device-storage-engine" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configure HDD Device Storage Engine</h5>
+
+<ul>
+<li><p><code>default['aerospike']['config']['namespace']['test']['storage-engine device']['file']</code> (default: <code>/var/lib/aerospike/test.ns</code>): aerospike namespace configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['namespace']['test']['storage-engine device']['filesize']</code> (default: <code>1G</code>): aerospike namespace configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['namespace']['test']['storage-engine device']['scheduler-mode']</code> (default: <code>noop</code>): aerospike namespace configuration attribute</p></li>
+<li><p><code>default['aerospike']['config']['namespace']['test']['storage-engine device']['data-in-memory']</code> (default: <code>true</code>): aerospike namespace configuration attribute</p></li>
+</ul>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<ol>
+<li>Fork the repository on Github</li>
+<li>Create a named feature branch (like <code>add_component_x</code>)</li>
+<li>Write your change</li>
+<li>Write tests for your change (if applicable)</li>
+<li>Run the tests (<code>rake &amp; rake knife</code>), ensuring they all pass</li>
+<li>Write new resource/attribute description to <code>README.md</code>
+</li>
+<li>Write description about changes to PR</li>
+<li>Submit a Pull Request using Github</li>
+</ol>
+
+<h2>
+<a id="copyright--license" class="anchor" href="#copyright--license" aria-hidden="true"><span class="octicon octicon-link"></span></a>Copyright &amp; License</h2>
+
+<p>Authors:: Virender Khatri and <a href="https://github.com/vkhatri/chef-aerospike-cluster/graphs/contributors">Contributors</a></p>
+
+<pre>
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</pre>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
