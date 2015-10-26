@@ -1,15 +1,28 @@
 aerospike-cluster Cookbook
 ================
 
-[![Cookbook](http://img.shields.io/badge/cookbook-v0.1.0-green.svg)](https://github.com/vkhatri/chef-aerospike-cluster)[![Build Status](https://travis-ci.org/vkhatri/chef-aerospike-cluster.svg?branch=master)](https://travis-ci.org/vkhatri/chef-aerospike-cluster)
+[![Cookbook](http://img.shields.io/badge/cookbook-v0.1.1-green.svg)](https://github.com/vkhatri/chef-aerospike-cluster)[![Build Status](https://travis-ci.org/vkhatri/chef-aerospike-cluster.svg?branch=master)](https://travis-ci.org/vkhatri/chef-aerospike-cluster)
 
 This is a [Chef] cookbook to manage [Aerospike].
 
+>> For Production environment, always prefer the [most recent release](https://supermarket.chef.io/cookbooks/aerospike-cluster).
+
+### Most Recent Release
+
+```
+cookbook 'aerospike-cluster', '~> 0.1.1'
+```
+
+### From Git
+
+```
+cookbook 'aerospike-cluster', github: 'vkhatri/chef-aerospike-cluster'
+```
 
 ## Repository
-
+```
 https://github.com/vkhatri/chef-aerospike-cluster
-
+```
 
 ## Supported OS
 
@@ -19,6 +32,11 @@ This cookbook was tested on Amazon Linux & Ubuntu 14.04 and expected to work on 
 ## Supported Edition
 
 Currently cookbook only supports Aerospike `Community` edition. `Enterprise` edition support will be added over time.
+
+
+## Supported Apache Solr Version
+
+This cookbook was tested for Aerospike v3.6.3.
 
 
 ## Installation Method

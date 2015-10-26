@@ -3,6 +3,10 @@ aerospike-cluster CHANGELOG
 
 This file is used to list changes made in each version of the aerospike-cluster cookbook.
 
+0.1.1
+-----
+- Virender Khatri - #1, added package installation support
+
 0.1.0
 -----
 - Virender Khatri - Initial release of aerospike-cluster
