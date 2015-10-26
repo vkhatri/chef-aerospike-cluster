@@ -21,10 +21,14 @@ default['aerospike']['work_dir']      = '/opt/aerospike'
 default['aerospike']['parent_dir'] = '/usr/local/aerospike'
 
 default['aerospike']['tarball_url'] = 'auto'
+default['aerospike']['package_url'] = 'auto'
+default['aerospike']['package_suffix'] = value_for_platform(
+  'ubuntu' => { 'default' => 'ubuntu12.04' },
+  'debian' => { 'default' => "debian#{node['platform_version']}" },
+  %w(amazon centos redhat) => { 'default' => 'el6' }
+)
 
 default['aerospike']['service_action'] = [:enable, :start]
-
 default['aerospike']['notify_restart'] = true
-
 default['aerospike']['umask'] = '0022'
 default['aerospike']['mode']  = '0755'

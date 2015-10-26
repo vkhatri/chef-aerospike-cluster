@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-fail "invalid value for node attribute node['aerospike']['install_method'], valid are 'tarball'" unless %w(tarball).include?(node['aerospike']['install_method'])
+fail "invalid value for node attribute node['aerospike']['install_method'], valid are 'tarball package'" unless %w(tarball package).include?(node['aerospike']['install_method'])
 
 fail "invalid value for node attribute node['aerospike']['install_edition'], valid are 'community'" unless %w(community).include?(node['aerospike']['install_edition'])
 

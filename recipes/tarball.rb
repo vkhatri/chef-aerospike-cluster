@@ -36,9 +36,7 @@ tarball_checksum = tarball_sha256sum(node['aerospike']['install_edition'], node[
 include_recipe 'aerospike-cluster::user'
 
 [node['aerospike']['parent_dir'],
- node['aerospike']['source_dir'],
- node['aerospike']['data_dir'],
- node['aerospike']['log_dir']
+ node['aerospike']['source_dir']
 ].each do |dir|
   directory dir do
     owner node['aerospike']['user']

@@ -18,10 +18,15 @@
 #
 
 node.default['aerospike']['install_dir'] = ::File.join(node['aerospike']['parent_dir'], 'aerospike')
-node.default['aerospike']['source_dir'] = ::File.join(node['aerospike']['parent_dir'], "aerospike-#{node['aerospike']['version']}")
-node.default['aerospike']['home_dir'] = node['aerospike']['install_method'] == 'package' ? '/usr/share/aerospike' : node['aerospike']['install_dir']
-node.default['aerospike']['bin_dir'] = ::File.join(node['aerospike']['home_dir'], 'bin')
 
+case node['aerospike']['install_method']
+when 'package'
+  node.default['aerospike']['source_dir'] = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']}-#{node['aerospike']['package_suffix']}")
+else
+  node.default['aerospike']['source_dir'] = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']}-tgz")
+end
+
+node.default['aerospike']['bin_dir'] = node['aerospike']['install_method'] == 'package' ? '/usr/bin' : ::File.join(node['aerospike']['install_dir'], 'bin')
 node.default['aerospike']['data_dir'] = ::File.join(node['aerospike']['work_dir'], 'data')
 node.default['aerospike']['smd_dir'] = ::File.join(node['aerospike']['work_dir'], 'smd')
 node.default['aerospike']['log_file'] = ::File.join(node['aerospike']['log_dir'], 'aerospike.log')

@@ -33,3 +33,24 @@ def tarball_sha256sum(edition, version)
   fail "sha256sum is missing for aerospike tarball edition #{edition} version #{version}" unless sha256sum
   sha256sum
 end
+
+def package_sha256sum(edition, version, os)
+  sha256sums = {
+    'community' => {
+      'ubuntu12.04' => {},
+      'debian6' => {},
+      'debian7' => {},
+      'el6' => {}
+    },
+    'enterprise' => {}
+  }
+
+  sha256sums['community']['ubuntu12.04']['3.6.3'] = 'd47ae90cf53058e756833ddcfa57c80601e62e6756fd2f333a6e9edd1234a6c0'
+  sha256sums['community']['debian6']['3.6.3'] = '8d78bde99e81efd7359cbbfc88596b4dfd8ff55258688c9bdce111e38a23ddc6'
+  sha256sums['community']['debian7']['3.6.3'] = '6bd5d425af19bd13ece1890b38cdce2a4941eff4764374774c767b04031bebda'
+  sha256sums['community']['el6']['3.6.3'] = '3ca3ac402beeda4a5cb2b8e45448214f1357b49ae86d3c44ff1407a406acfd5f'
+
+  sha256sum = sha256sums[edition][os][version]
+  fail "sha256sum is missing for aerospike package edition #{edition} version #{version}" unless sha256sum
+  sha256sum
+end
