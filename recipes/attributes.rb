@@ -48,24 +48,24 @@ node.default['aerospike']['config']['logging'][config_log_file]['context'] = 'an
 # enable test namespace by default
 if node['aerospike']['enable_test_namespace']
   # namespace {}
-  default['aerospike']['config']['namespace']['test']['replication-factor'] = 1
-  default['aerospike']['config']['namespace']['test']['memory-size'] = '1M'
-  default['aerospike']['config']['namespace']['test']['default-ttl'] = '1h'
-  # default['aerospike']['config']['namespace']['test']['single-bin'] = true
-  # default['aerospike']['config']['namespace']['test']['data-in-index'] = true
-  # default['aerospike']['config']['namespace']['test']['high-water-memory-pct'] = 60
-  # default['aerospike']['config']['namespace']['test']['stop-writes-pct'] = 90
+  node.default['aerospike']['config']['namespace']['test']['replication-factor'] = 1
+  node.default['aerospike']['config']['namespace']['test']['memory-size'] = '1M'
+  node.default['aerospike']['config']['namespace']['test']['default-ttl'] = '1h'
+  # node.default['aerospike']['config']['namespace']['test']['single-bin'] = true
+  # node.default['aerospike']['config']['namespace']['test']['data-in-index'] = true
+  # node.default['aerospike']['config']['namespace']['test']['high-water-memory-pct'] = 60
+  # node.default['aerospike']['config']['namespace']['test']['stop-writes-pct'] = 90
 
   # memory storage engine
-  # default['aerospike']['config']['namespace']['test']['storage-engine'] = 'memory'
+  # node.default['aerospike']['config']['namespace']['test']['storage-engine'] = 'memory'
 
   # ssd device storage engine
-  # default['aerospike']['config']['namespace']['test']['storage-engine device']['device'] = %w(/dev/xvdb /dev/xvdc)
-  # default['aerospike']['config']['namespace']['test']['storage-engine device']['write-block-size'] = '128K'
-  # default['aerospike']['config']['namespace']['test']['storage-engine device']['scheduler-mode'] = 'noop'
+  # node.default['aerospike']['config']['namespace']['test']['storage-engine device']['device'] = %w(/dev/xvdb /dev/xvdc)
+  # node.default['aerospike']['config']['namespace']['test']['storage-engine device']['write-block-size'] = '128K'
+  # node.default['aerospike']['config']['namespace']['test']['storage-engine device']['scheduler-mode'] = 'noop'
 
   # hdd device storage engine
-  default['aerospike']['config']['namespace']['test']['storage-engine device']['filesize'] = '4M'
+  node.default['aerospike']['config']['namespace']['test']['storage-engine device']['filesize'] = '4M'
 
-  # default['aerospike']['config']['namespace']['test']['storage-engine device']['data-in-memory'] = true
+  # node.default['aerospike']['config']['namespace']['test']['storage-engine device']['data-in-memory'] = true
 end
