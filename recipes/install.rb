@@ -24,3 +24,5 @@ fail "invalid value for node attribute node['aerospike']['install_edition'], val
 include_recipe 'aerospike-cluster::dependency'
 
 include_recipe "aerospike-cluster::#{node['aerospike']['install_method']}"
+
+include_recipe 'aerospike-cluster::amc'

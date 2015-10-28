@@ -1,0 +1,6 @@
+<% @config.each do |key, value| -%>
+<% unless value.nil? -%>
+<%  value = ['True', 'False', 'None'].include?(value) ? value : value.to_json %>
+<%= "#{key} = #{value}" %>
+<% end -%>
+<% end -%>

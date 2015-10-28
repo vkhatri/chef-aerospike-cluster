@@ -43,7 +43,7 @@ template node['aerospike']['conf_file'] do
   group node['aerospike']['group']
   mode 0644
   variables(:config => config)
-  notifies :restart, 'service[aerospike]', :delayed if node['aerospike']['notify_restart']
+  notifies :restart, 'service[aerospike]' if node['aerospike']['notify_restart']
 end
 
 service 'aerospike' do

@@ -42,7 +42,6 @@ This cookbook was tested for Aerospike v3.6.3.
 ## TODO
 
 - add support for `enterprise` edition
-- add `package` installation
 - add `specs`
 - manage aerospike `dependencies`, e.g. python-bcrypt etc.
 - add `role` examples
@@ -64,6 +63,8 @@ This cookbook was tested for Aerospike v3.6.3.
 - `aerospike-cluster::package` - aerospike package installation
 
 - `aerospike-cluster::config` - configure aerospike
+
+- `aerospike-cluster::amc` - install and configure aerospike management console
 
 
 ## Advanced Attributes
@@ -217,6 +218,43 @@ This cookbook was tested for Aerospike v3.6.3.
 
 * `default['aerospike']['config']['namespace']['test']['storage-engine device']['data-in-memory']` (default: `true`): aerospike namespace configuration attribute
 
+
+
+## AMC Attributes
+
+* `default['aerospike']['amc']['conf_dir']` (default: `/etc/amc/config`): amc config directory
+
+* `default['aerospike']['amc']['log_dir']` (default: `/var/log/amc`): amc log directory
+
+* `default['aerospike']['amc']['service_action']` (default: `[:enable, :start]`): amc service resource action
+
+* `default['aerospike']['amc']['packages']` (default: `clculated`): amc packages dependency
+
+* `default['aerospike']['amc']['package_url']` (default: `auto`): amc package url
+
+* `default['aerospike']['amc']['update_interval']` (default: `5`): amc.cfg configuration parameter
+
+* `default['aerospike']['amc']['host']` (default: `node['ipaddress']`): amc gunicorn bind host
+
+* `default['aerospike']['amc']['port']` (default: `8081`): amc gunicorn bind port
+
+* `default['aerospike']['amc']['gunicorn_config']['bind']` (default: `calculated`): amc gunicorn configuration parameter
+
+* `default['aerospike']['amc']['gunicorn_config']['errorlog']` (default: `/var/log/amc/error.log`): amc gunicorn configuration parameter
+
+* `default['aerospike']['amc']['gunicorn_config']['loglevel']` (default: `info`): amc gunicorn configuration parameter
+
+* `default['aerospike']['amc']['gunicorn_config']['workers']` (default: `1`): amc gunicorn configuration parameter
+
+* `default['aerospike']['amc']['gunicorn_config']['timeout']` (default: `150`): amc gunicorn configuration parameter
+
+* `default['aerospike']['amc']['gunicorn_config']['pidfile']` (default: `/tmp/amc.pid`): amc gunicorn configuration parameter
+
+* `default['aerospike']['amc']['gunicorn_config']['proc_name']` (default: `amc`): amc gunicorn configuration parameter
+
+* `default['aerospike']['amc']['gunicorn_config']['chdir']` (default: `/opt/amc/server`): amc gunicorn configuration parameter
+
+* `default['aerospike']['amc']['gunicorn_config']['worker_class']` (default: `eventlet`): amc gunicorn configuration parameter
 
 
 

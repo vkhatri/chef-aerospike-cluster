@@ -51,6 +51,25 @@ def package_sha256sum(edition, version, os)
   sha256sums['community']['el6']['3.6.3'] = '3ca3ac402beeda4a5cb2b8e45448214f1357b49ae86d3c44ff1407a406acfd5f'
 
   sha256sum = sha256sums[edition][os][version]
-  fail "sha256sum is missing for aerospike package edition #{edition} version #{version}" unless sha256sum
+  fail "sha256sum is missing for aerospike package edition #{edition} version #{version} os #{os}" unless sha256sum
+  sha256sum
+end
+
+def amc_package_sha256sum(edition, version, os)
+  sha256sums = {
+    'community' => {
+      'ubuntu12' => {},
+      'debian6' => {},
+      'el6' => {}
+    },
+    'enterprise' => {}
+  }
+
+  sha256sums['community']['ubuntu12']['3.6.3'] = 'c1d6692cb15a7088b947a27b9f862d44d64ba4976626ee0463a196e008b90547'
+  sha256sums['community']['debian6']['3.6.3'] = 'c1d6692cb15a7088b947a27b9f862d44d64ba4976626ee0463a196e008b90547'
+  sha256sums['community']['el6']['3.6.3'] = '9a160f59f7a815106a39c4cf28043665383986977d14e11a681ff0f29215ace5'
+
+  sha256sum = sha256sums[edition][os][version]
+  fail "sha256sum is missing for aerospike package edition #{edition} version #{version} os #{os}" unless sha256sum
   sha256sum
 end
