@@ -39,11 +39,6 @@ Currently cookbook only supports Aerospike `Community` edition. `Enterprise` edi
 This cookbook was tested for Aerospike v3.6.3.
 
 
-## Installation Method
-
-Currently cookbook only supports Aerospike `tarball` installtion. `Package` installation will be added soon.
-
-
 ## TODO
 
 - add support for `enterprise` edition
@@ -87,6 +82,8 @@ Currently cookbook only supports Aerospike `tarball` installtion. `Package` inst
 * `default['aerospike']['tarball_purge']` (default: `false`): whether to purge old tarball versions
 
 * `default['aerospike']['cookbook']` (default: `aerospike-cluster`): whether to purge old tarball versions
+
+* `default['aerospike']['enable_test_namespace']` (default: `true`): whether to add `test` namespace to `aerospike.conf`
 
 
 ## Core Attributes

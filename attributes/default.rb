@@ -32,3 +32,5 @@ default['aerospike']['service_action'] = [:enable, :start]
 default['aerospike']['notify_restart'] = true
 default['aerospike']['umask'] = '0022'
 default['aerospike']['mode']  = '0755'
+
+default['aerospike']['enable_test_namespace'] = true
