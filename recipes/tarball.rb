@@ -26,17 +26,16 @@ when 'community'
   end
   tarball_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-community-#{node['aerospike']['version']}.tar.gz")
 when 'enterprise'
-  fail 'cookbook does not support aerospike enterprise edition installation'
+  fail 'cookbook does not support aerospike enterprise edition tarball installation'
 else
-  fail 'cookbook only support aerospike community edition installation'
+  fail 'cookbook only support aerospike community edition tarball installation'
 end
 
 tarball_checksum = tarball_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version'])
 
 include_recipe 'aerospike-cluster::user'
 
-[node['aerospike']['parent_dir'],
- node['aerospike']['source_dir']
+[node['aerospike']['source_dir']
 ].each do |dir|
   directory dir do
     owner node['aerospike']['user']

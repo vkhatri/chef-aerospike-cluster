@@ -17,34 +17,51 @@
 # limitations under the License.
 #
 
-case node['aerospike']['install_edition']
-when 'community'
-  if node['aerospike']['package_url'] == 'auto'
+case node['aerospike']['package_url']
+when 'auto'
+  case node['aerospike']['install_edition']
+  when 'community'
     package_url = value_for_platform(
       'ubuntu' => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/ubuntu12" },
       'debian' => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/debian#{node['platform_version']}" },
       %w(amazon centos redhat) => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/el6" }
     )
+  when 'enterprise'
+    basic_auth = node['aerospike']['enterprise']['username'] + ':' + node['aerospike']['enterprise']['password']
+    package_url = value_for_platform(
+      'ubuntu' => { 'default' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/ubuntu12" },
+      'debian' => { 'default' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/debian#{node['platform_version']}" },
+      %w(amazon centos redhat) => { 'default' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/el6" }
+    )
   else
-    package_url = node['aerospike']['package_url']
+    fail "invalid aerospike edition, valid are 'community, enterprise'"
   end
-
-  package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-community-#{node['aerospike']['version']}-#{node['aerospike']['package_suffix']}.tgz")
-when 'enterprise'
-  fail 'cookbook does not support aerospike enterprise edition installation'
 else
-  fail 'cookbook only support aerospike community edition installation'
+  package_url = node['aerospike']['package_url']
 end
 
+package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']}-#{node['aerospike']['package_suffix']}.tgz")
 package_checksum = package_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version'], node['aerospike']['package_suffix'])
 
 # download tarball
-remote_file package_file do
-  source package_url
-  checksum package_checksum
-  owner node['aerospike']['user']
-  group node['aerospike']['group']
-  not_if { ::File.exist?(::File.join(node['aerospike']['source_dir'], 'asinstall')) }
+if node['aerospike']['install_edition'] == 'enterprise'
+  # temporary fix for issue - https://github.com/vkhatri/chef-aerospike-cluster/issues/8
+  execute "download #{package_file}" do
+    user node['aerospike']['user']
+    group node['aerospike']['group']
+    umask node['aerospike']['umask']
+    cwd node['aerospike']['parent_dir']
+    command "curl --verbose --location --output #{package_file} --user #{node['aerospike']['enterprise']['username']}:#{node['aerospike']['enterprise']['password']} #{package_url}"
+    not_if { ::File.exist?(::File.join(node['aerospike']['source_dir'], 'asinstall')) }
+  end
+else
+  remote_file package_file do
+    source package_url
+    checksum package_checksum
+    owner node['aerospike']['user']
+    group node['aerospike']['group']
+    not_if { ::File.exist?(::File.join(node['aerospike']['source_dir'], 'asinstall')) }
+  end
 end
 
 # extract tarball
@@ -87,11 +104,4 @@ end
 package "aerospike-tools-#{node['aerospike']['version']}-#{node['aerospike']['package_suffix']}" do
   source tools_package_file
   provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
-end
-
-directory node['aerospike']['parent_dir'] do
-  owner node['aerospike']['user']
-  group node['aerospike']['group']
-  mode node['aerospike']['mode']
-  recursive true
 end

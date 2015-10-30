@@ -33,27 +33,41 @@ package_type = value_for_platform_family(
   'debian' => 'deb'
 )
 
-case node['aerospike']['install_edition']
-when 'community'
-  if node['aerospike']['amc']['package_url'] == 'auto'
+case node['aerospike']['package_url']
+when 'auto'
+  case node['aerospike']['install_edition']
+  when 'community'
     package_url = "http://www.aerospike.com/download/amc/#{node['aerospike']['version']}/artifact/#{package_url_suffix}"
+  when 'enterprise'
+    package_url = "http://#{node['aerospike']['enterprise']['username']}:#{node['aerospike']['enterprise']['password']}@www.aerospike.com/enterprise/download/amc/#{node['aerospike']['version']}/artifact/#{package_url_suffix}"
   else
-    package_url = node['aerospike']['amc']['package_url']
+    fail "invalid aerospike edition, valid are 'community, enterprise'"
   end
-when 'enterprise'
-  fail 'cookbook does not support amc enterpriseedition installation'
 else
-  fail 'cookbook only support amc community edition installation'
+  package_url = node['aerospike']['amc']['package_url']
 end
 
 package_checksum = amc_package_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version'], package_url_suffix)
 package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-amc-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']}#{package_suffix}.#{node['kernel']['machine']}.#{package_type}")
 
-remote_file package_file do
-  source package_url
-  checksum package_checksum
-  owner node['aerospike']['user']
-  group node['aerospike']['group']
+# download tarball
+if node['aerospike']['install_edition'] == 'enterprise'
+  # temporary fix for issue - https://github.com/vkhatri/chef-aerospike-cluster/issues/8
+  execute "download #{package_file}" do
+    user node['aerospike']['user']
+    group node['aerospike']['group']
+    umask node['aerospike']['umask']
+    cwd node['aerospike']['parent_dir']
+    command "curl --verbose --location --output #{package_file} --user #{node['aerospike']['enterprise']['username']}:#{node['aerospike']['enterprise']['password']} #{package_url}"
+    not_if { ::File.exist?(package_file) }
+  end
+else
+  remote_file package_file do
+    source package_url
+    checksum package_checksum
+    owner node['aerospike']['user']
+    group node['aerospike']['group']
+  end
 end
 
 node['aerospike']['amc']['packages'].each do |p|

@@ -31,7 +31,10 @@ This cookbook was tested on Amazon Linux & Ubuntu 14.04 and expected to work on 
 
 ## Supported Edition
 
-Currently cookbook only supports Aerospike `Community` edition. `Enterprise` edition support will be added over time.
+Cookbook supports both Aerospike `Community` and `Enterprise` edition.
+
+>> Note that `Enterprise` edition can only be installed using
+`package` install_method.
 
 
 ## Supported Apache Solr Version
@@ -41,10 +44,10 @@ This cookbook was tested for Aerospike v3.6.3.
 
 ## TODO
 
-- add support for `enterprise` edition
 - add `specs`
-- manage aerospike `dependencies`, e.g. python-bcrypt etc.
+- manage aerospike `dependencies`, e.g. python-bcrypt etc. if any
 - add `role` examples
+- add `amc` enterprise edition configuration parameters
 
 
 
@@ -78,13 +81,17 @@ This cookbook was tested for Aerospike v3.6.3.
 
 * `default['aerospike']['install_method']` (default: `tarball`): aerospike install method, options: tarball
 
-* `default['aerospike']['install_edition']` (default: `community`): aerospike edition, options: community
+* `default['aerospike']['install_edition']` (default: `community`): aerospike edition, options: community, enterprise
 
 * `default['aerospike']['tarball_purge']` (default: `false`): whether to purge old tarball versions
 
 * `default['aerospike']['cookbook']` (default: `aerospike-cluster`): whether to purge old tarball versions
 
 * `default['aerospike']['enable_test_namespace']` (default: `true`): whether to add `test` namespace to `aerospike.conf`
+
+* `default['aerospike']['enterprise']['username']` (default: `nil`): aerospike enterprise user name
+
+* `default['aerospike']['enterprise']['password']` (default: `nil`): aerospike enterprise user password
 
 
 ## Core Attributes

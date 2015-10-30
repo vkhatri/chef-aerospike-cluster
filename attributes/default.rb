@@ -3,7 +3,10 @@ default['aerospike']['version'] = '3.6.3'
 default['aerospike']['tarball_purge'] = false
 
 default['aerospike']['install_method'] = 'tarball' # options: tarball
-default['aerospike']['install_edition'] = 'community' # options: community
+default['aerospike']['install_edition'] = 'community' # options: community, enterprise
+
+default['aerospike']['enterprise']['username'] = nil
+default['aerospike']['enterprise']['password'] = nil
 
 default['aerospike']['packages'] = %w()
 default['aerospike']['cookbook'] = 'aerospike-cluster'
