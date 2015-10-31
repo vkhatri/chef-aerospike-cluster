@@ -32,7 +32,7 @@
       <section>
         <div id="title">
           <h1>Chef Aerospike</h1>
-          <p>Chef cookbook to Manage Aerospike</p>
+          <p>Chef Cookbook to Manage Aerospike</p>
           <hr>
           <span class="credits left">Project maintained by <a href="https://github.com/vkhatri">vkhatri</a></span>
           <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
@@ -41,14 +41,33 @@
         <h1>
 <a id="aerospike-cluster-cookbook" class="anchor" href="#aerospike-cluster-cookbook" aria-hidden="true"><span class="octicon octicon-link"></span></a>aerospike-cluster Cookbook</h1>
 
-<p><a href="https://github.com/vkhatri/chef-aerospike-cluster"><img src="http://img.shields.io/badge/cookbook-v0.1.0-green.svg" alt="Cookbook"></a><a href="https://travis-ci.org/vkhatri/chef-aerospike-cluster"><img src="https://travis-ci.org/vkhatri/chef-aerospike-cluster.svg?branch=master" alt="Build Status"></a></p>
+<p><a href="https://github.com/vkhatri/chef-aerospike-cluster"><img src="http://img.shields.io/badge/cookbook-v0.1.2-green.svg" alt="Cookbook"></a><a href="https://travis-ci.org/vkhatri/chef-aerospike-cluster"><img src="https://travis-ci.org/vkhatri/chef-aerospike-cluster.svg?branch=master" alt="Build Status"></a></p>
 
 <p>This is a <a href="https://www.chef.io/">Chef</a> cookbook to manage <a href="http://www.aerospike.com/">Aerospike</a>.</p>
+
+<blockquote>
+<blockquote>
+<p>For Production environment, always prefer the <a href="https://supermarket.chef.io/cookbooks/aerospike-cluster">most recent release</a>.</p>
+</blockquote>
+</blockquote>
+
+<h3>
+<a id="most-recent-release" class="anchor" href="#most-recent-release" aria-hidden="true"><span class="octicon octicon-link"></span></a>Most Recent Release</h3>
+
+<pre><code>cookbook 'aerospike-cluster', '~&gt; 0.1.2'
+</code></pre>
+
+<h3>
+<a id="from-git" class="anchor" href="#from-git" aria-hidden="true"><span class="octicon octicon-link"></span></a>From Git</h3>
+
+<pre><code>cookbook 'aerospike-cluster', github: 'vkhatri/chef-aerospike-cluster'
+</code></pre>
 
 <h2>
 <a id="repository" class="anchor" href="#repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>Repository</h2>
 
-<p><a href="https://github.com/vkhatri/chef-aerospike-cluster">https://github.com/vkhatri/chef-aerospike-cluster</a></p>
+<pre><code>https://github.com/vkhatri/chef-aerospike-cluster
+</code></pre>
 
 <h2>
 <a id="supported-os" class="anchor" href="#supported-os" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported OS</h2>
@@ -58,23 +77,29 @@
 <h2>
 <a id="supported-edition" class="anchor" href="#supported-edition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported Edition</h2>
 
-<p>Currently cookbook only supports Aerospike <code>Community</code> edition. <code>Enterprise</code> edition support will be added over time.</p>
+<p>Cookbook supports both Aerospike <code>Community</code> and <code>Enterprise</code> edition.</p>
+
+<blockquote>
+<blockquote>
+<p>Note that <code>Enterprise</code> edition can only be installed using
+<code>package</code> install_method.</p>
+</blockquote>
+</blockquote>
 
 <h2>
-<a id="installation-method" class="anchor" href="#installation-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation Method</h2>
+<a id="supported-aerospike-version" class="anchor" href="#supported-aerospike-version" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported Aerospike Version</h2>
 
-<p>Currently cookbook only supports Aerospike <code>tarball</code> installtion. <code>Package</code> installation will be added soon.</p>
+<p>This cookbook was tested for Aerospike v3.6.3.</p>
 
 <h2>
 <a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>TODO</h2>
 
 <ul>
-<li>add support for <code>enterprise</code> edition</li>
-<li>add <code>package</code> installation</li>
 <li>add <code>specs</code>
 </li>
-<li>manage aerospike <code>dependencies</code>, e.g. python-bcrypt etc.</li>
+<li>manage aerospike <code>dependencies</code>, e.g. python-bcrypt etc. if any</li>
 <li>add <code>role</code> examples</li>
+<li>add <code>amc</code> enterprise edition configuration parameters</li>
 </ul>
 
 <h2>
@@ -88,6 +113,7 @@
 <li><p><code>aerospike-cluster::tarball</code> - aerospike tarball installation</p></li>
 <li><p><code>aerospike-cluster::package</code> - aerospike package installation</p></li>
 <li><p><code>aerospike-cluster::config</code> - configure aerospike</p></li>
+<li><p><code>aerospike-cluster::amc</code> - install and configure aerospike management console</p></li>
 </ul>
 
 <h2>
@@ -98,9 +124,12 @@
 <li><p><code>default['aerospike']['tarball_url']</code> (default: <code>auto</code>): aerospike tarball url</p></li>
 <li><p><code>default['aerospike']['notify_restart']</code> (default: <code>true</code>): whether to restart aerospike service on configuration file change</p></li>
 <li><p><code>default['aerospike']['install_method']</code> (default: <code>tarball</code>): aerospike install method, options: tarball</p></li>
-<li><p><code>default['aerospike']['install_edition']</code> (default: <code>community</code>): aerospike edition, options: community</p></li>
+<li><p><code>default['aerospike']['install_edition']</code> (default: <code>community</code>): aerospike edition, options: community, enterprise</p></li>
 <li><p><code>default['aerospike']['tarball_purge']</code> (default: <code>false</code>): whether to purge old tarball versions</p></li>
 <li><p><code>default['aerospike']['cookbook']</code> (default: <code>aerospike-cluster</code>): whether to purge old tarball versions</p></li>
+<li><p><code>default['aerospike']['enable_test_namespace']</code> (default: <code>true</code>): whether to add <code>test</code> namespace to <code>aerospike.conf</code></p></li>
+<li><p><code>default['aerospike']['enterprise']['username']</code> (default: <code>nil</code>): aerospike enterprise user name</p></li>
+<li><p><code>default['aerospike']['enterprise']['password']</code> (default: <code>nil</code>): aerospike enterprise user password</p></li>
 </ul>
 
 <h2>
@@ -236,6 +265,29 @@
 <li><p><code>default['aerospike']['config']['namespace']['test']['storage-engine device']['filesize']</code> (default: <code>1G</code>): aerospike namespace configuration attribute</p></li>
 <li><p><code>default['aerospike']['config']['namespace']['test']['storage-engine device']['scheduler-mode']</code> (default: <code>noop</code>): aerospike namespace configuration attribute</p></li>
 <li><p><code>default['aerospike']['config']['namespace']['test']['storage-engine device']['data-in-memory']</code> (default: <code>true</code>): aerospike namespace configuration attribute</p></li>
+</ul>
+
+<h2>
+<a id="amc-attributes" class="anchor" href="#amc-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>AMC Attributes</h2>
+
+<ul>
+<li><p><code>default['aerospike']['amc']['conf_dir']</code> (default: <code>/etc/amc/config</code>): amc config directory</p></li>
+<li><p><code>default['aerospike']['amc']['log_dir']</code> (default: <code>/var/log/amc</code>): amc log directory</p></li>
+<li><p><code>default['aerospike']['amc']['service_action']</code> (default: <code>[:enable, :start]</code>): amc service resource action</p></li>
+<li><p><code>default['aerospike']['amc']['packages']</code> (default: <code>clculated</code>): amc packages dependency</p></li>
+<li><p><code>default['aerospike']['amc']['package_url']</code> (default: <code>auto</code>): amc package url</p></li>
+<li><p><code>default['aerospike']['amc']['update_interval']</code> (default: <code>5</code>): amc.cfg configuration parameter</p></li>
+<li><p><code>default['aerospike']['amc']['host']</code> (default: <code>node['ipaddress']</code>): amc gunicorn bind host</p></li>
+<li><p><code>default['aerospike']['amc']['port']</code> (default: <code>8081</code>): amc gunicorn bind port</p></li>
+<li><p><code>default['aerospike']['amc']['gunicorn_config']['bind']</code> (default: <code>calculated</code>): amc gunicorn configuration parameter</p></li>
+<li><p><code>default['aerospike']['amc']['gunicorn_config']['errorlog']</code> (default: <code>/var/log/amc/error.log</code>): amc gunicorn configuration parameter</p></li>
+<li><p><code>default['aerospike']['amc']['gunicorn_config']['loglevel']</code> (default: <code>info</code>): amc gunicorn configuration parameter</p></li>
+<li><p><code>default['aerospike']['amc']['gunicorn_config']['workers']</code> (default: <code>1</code>): amc gunicorn configuration parameter</p></li>
+<li><p><code>default['aerospike']['amc']['gunicorn_config']['timeout']</code> (default: <code>150</code>): amc gunicorn configuration parameter</p></li>
+<li><p><code>default['aerospike']['amc']['gunicorn_config']['pidfile']</code> (default: <code>/tmp/amc.pid</code>): amc gunicorn configuration parameter</p></li>
+<li><p><code>default['aerospike']['amc']['gunicorn_config']['proc_name']</code> (default: <code>amc</code>): amc gunicorn configuration parameter</p></li>
+<li><p><code>default['aerospike']['amc']['gunicorn_config']['chdir']</code> (default: <code>/opt/amc/server</code>): amc gunicorn configuration parameter</p></li>
+<li><p><code>default['aerospike']['amc']['gunicorn_config']['worker_class']</code> (default: <code>eventlet</code>): amc gunicorn configuration parameter</p></li>
 </ul>
 
 <h2>
