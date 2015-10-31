@@ -37,7 +37,7 @@ Cookbook supports both Aerospike `Community` and `Enterprise` edition.
 `package` install_method.
 
 
-## Supported Apache Solr Version
+## Supported Aerospike Version
 
 This cookbook was tested for Aerospike v3.6.3.
 
