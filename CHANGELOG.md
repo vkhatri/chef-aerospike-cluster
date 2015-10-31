@@ -3,6 +3,15 @@ aerospike-cluster CHANGELOG
 
 This file is used to list changes made in each version of the aerospike-cluster cookbook.
 
+0.1.2
+-----
+
+- Virender Khatri - #7, added enterprise edition support
+
+- Virender Khatri - #4, added amc setup
+
+- Virender Khatri - #3, make test namespace setup optional
+
 0.1.1
 -----
 - Virender Khatri - #1, added package installation support
