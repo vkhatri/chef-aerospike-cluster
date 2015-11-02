@@ -38,16 +38,14 @@ node.default['aerospike']['config']['service']['work-directory'] = node['aerospi
 node.default['aerospike']['config']['mod-lua']['user-path'] = ::File.join(node['aerospike']['work_dir'], 'usr', 'udf', 'lua')
 node.default['aerospike']['config']['mod-lua']['system-path'] = ::File.join(node['aerospike']['work_dir'], 'sys', 'udf', 'lua')
 
-# hdd device storage engine
-node.default['aerospike']['config']['namespace']['test']['storage-engine device']['file'] = ::File.join(node['aerospike']['data_dir'], 'test.ns')
-
 # logging ()
 config_log_file = "file #{node['aerospike']['log_file']}"
 node.default['aerospike']['config']['logging'][config_log_file]['context'] = 'any info'
 
 # enable test namespace by default
 if node['aerospike']['enable_test_namespace']
-  # namespace {}
+  # hdd device storage engine
+  node.default['aerospike']['config']['namespace']['test']['storage-engine device']['file'] = ::File.join(node['aerospike']['data_dir'], 'test.ns')
   node.default['aerospike']['config']['namespace']['test']['replication-factor'] = 1
   node.default['aerospike']['config']['namespace']['test']['memory-size'] = '1M'
   node.default['aerospike']['config']['namespace']['test']['default-ttl'] = '1h'
