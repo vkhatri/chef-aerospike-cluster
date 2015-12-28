@@ -67,6 +67,8 @@ This cookbook was tested for Aerospike v3.6.3.
 
 - `aerospike-cluster::config` - configure aerospike
 
+- `aerospike-cluster::cluster` - uses chef search to derive value for attribute `default['aerospike']['config']['network']['heartbeat']['mesh-seed-address-port']`
+
 - `aerospike-cluster::amc` - install and configure aerospike management console
 
 
@@ -93,6 +95,7 @@ This cookbook was tested for Aerospike v3.6.3.
 
 * `default['aerospike']['enterprise']['password']` (default: `nil`): aerospike enterprise user password
 
+* `default['aerospike']['chef']['search']` (default: `nil`): chef search query to set attribute `default['aerospike']['config']['network']['heartbeat']['mesh-seed-address-port']`, must include recipe `aerospike-cluster::cluster` recipe to run_list
 
 ## Core Attributes
 

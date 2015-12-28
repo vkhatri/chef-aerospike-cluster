@@ -3,6 +3,11 @@ aerospike-cluster CHANGELOG
 
 This file is used to list changes made in each version of the aerospike-cluster cookbook.
 
+0.1.3
+-----
+
+- Blair Hamilton - adding clustering via chef server
+
 0.1.2
 -----
 
