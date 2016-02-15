@@ -8,6 +8,12 @@ This file is used to list changes made in each version of the aerospike-cluster 
 
 - Blair Hamilton - adding clustering via chef server
 
+- Virender Khatri - #10, fix enable_test_namespace config disable for test namespace
+
+- Virender Khatri - better namespace formatting
+
+- Virender Khatri - fix rubocop #14
+
 0.1.2
 -----
 
@@ -19,10 +25,12 @@ This file is used to list changes made in each version of the aerospike-cluster 
 
 0.1.1
 -----
+
 - Virender Khatri - #1, added package installation support
 
 0.1.0
 -----
+
 - Virender Khatri - Initial release of aerospike-cluster
 
 - - -
