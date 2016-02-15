@@ -17,20 +17,15 @@
 # limitations under the License.
 #
 
-case node['aerospike']['install_edition']
-when 'community'
-  if node['aerospike']['tarball_url'] == 'auto'
-    tarball_url = "http://www.aerospike.com/download/server/#{node['aerospike']['version']}/artifact/tgz"
-  else
-    tarball_url = node['aerospike']['tarball_url']
-  end
-  tarball_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-community-#{node['aerospike']['version']}.tar.gz")
-when 'enterprise'
-  fail 'cookbook does not support aerospike enterprise edition tarball installation'
-else
-  fail 'cookbook only support aerospike community edition tarball installation'
-end
+fail 'cookbook only support aerospike community edition tarball installation' if node['aerospike']['install_edition'] != 'community'
 
+tarball_url = if node['aerospike']['tarball_url'] == 'auto'
+                "http://www.aerospike.com/download/server/#{node['aerospike']['version']}/artifact/tgz"
+              else
+                node['aerospike']['tarball_url']
+              end
+
+tarball_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-community-#{node['aerospike']['version']}.tar.gz")
 tarball_checksum = tarball_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version'])
 
 include_recipe 'aerospike-cluster::user'
