@@ -19,7 +19,11 @@
 #
 
 # Get a list of all the
-nodes = search(:node, node['aerospike']['chef']['search'].to_s)
+if Chef::Config[:solo]
+  Chef::Log.warn ('This recipe uses search. Chef Solo does not support search.')
+else
+  nodes = search(:node, node['aerospike']['chef']['search'].to_s)
+end
 nodes.sort_by! { |n| n['ipaddress'] }
 nodes.map! { |n| "#{n['ipaddress']} #{n['aerospike']['config']['network']['heartbeat']['port']}" }
 
