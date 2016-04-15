@@ -17,13 +17,13 @@
 # limitations under the License.
 #
 
-fail "invalid value for node attribute node['aerospike']['install_method'], valid are 'tarball package'" unless %w(tarball package).include?(node['aerospike']['install_method'])
+raise "invalid value for node attribute node['aerospike']['install_method'], valid are 'tarball package'" unless %w(tarball package).include?(node['aerospike']['install_method'])
 
-fail "invalid value for node attribute node['aerospike']['install_edition'], valid are 'community enterprise'" unless %w(community enterprise).include?(node['aerospike']['install_edition'])
+raise "invalid value for node attribute node['aerospike']['install_edition'], valid are 'community enterprise'" unless %w(community enterprise).include?(node['aerospike']['install_edition'])
 
 if node['aerospike']['install_method'] == 'enterprise'
-  fail "missing aerospike enterprise user, require attribute node['aerospike']['enterprise']['username']" unless node['aerospike']['enterprise']['username']
-  fail "missing aerospike enterprise password, require attribute 'node['aerospike']['enterprise']['password']'" unless node['aerospike']['enterprise']['password']
+  raise "missing aerospike enterprise user, require attribute node['aerospike']['enterprise']['username']" unless node['aerospike']['enterprise']['username']
+  raise "missing aerospike enterprise password, require attribute 'node['aerospike']['enterprise']['password']'" unless node['aerospike']['enterprise']['password']
 end
 
 include_recipe 'aerospike-cluster::dependency'

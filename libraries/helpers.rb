@@ -3,11 +3,11 @@ def line_intend(count)
 end
 
 def as_config_generator(object, intend = 2)
-  fail "expecting a Hash, but got '#{object.inspect}'" unless object.is_a?(Hash)
+  raise "expecting a Hash, but got '#{object.inspect}'" unless object.is_a?(Hash)
   data = ''
   object.each do |key, value|
     if %w(mesh-seed-address-port device).include?(key)
-      fail "expecting an Array for attribute #{key}" unless value.is_a?(Array)
+      raise "expecting an Array for attribute #{key}" unless value.is_a?(Array)
       # array attributes
       value.uniq.each do |v|
         data << line_intend(intend) + key + ' ' + v + "\n"
@@ -30,7 +30,7 @@ def tarball_sha256sum(edition, version)
   sha256sums = { 'community' => {}, 'enterprise' => {} }
   sha256sums['community']['3.6.3'] = 'fb0fb93e64a8559349645f20821193d1f767672bc06c7f0ad1b1b0a4bc40a7f2'
   sha256sum = sha256sums[edition][version]
-  fail "sha256sum is missing for aerospike tarball edition #{edition} version #{version}" unless sha256sum
+  raise "sha256sum is missing for aerospike tarball edition #{edition} version #{version}" unless sha256sum
   sha256sum
 end
 
@@ -61,7 +61,7 @@ def package_sha256sum(edition, version, os)
   sha256sums['enterprise']['el6']['3.6.3'] = '7916da7af3347e85a6839d4bbf69e58a6dce2a89297c421a5cf4ddc596b7c844'
 
   sha256sum = sha256sums[edition][os][version]
-  fail "sha256sum is missing for aerospike package edition #{edition} version #{version} os #{os}" unless sha256sum
+  raise "sha256sum is missing for aerospike package edition #{edition} version #{version} os #{os}" unless sha256sum
   sha256sum
 end
 
@@ -88,6 +88,6 @@ def amc_package_sha256sum(edition, version, os)
   sha256sums['enterprise']['el6']['3.6.3'] = '3e69911adb03b5a9c75e2425adc706bdfdaab064097264c406194907f1fdf27e'
 
   sha256sum = sha256sums[edition][os][version]
-  fail "sha256sum is missing for aerospike package edition #{edition} version #{version} os #{os}" unless sha256sum
+  raise "sha256sum is missing for aerospike package edition #{edition} version #{version} os #{os}" unless sha256sum
   sha256sum
 end

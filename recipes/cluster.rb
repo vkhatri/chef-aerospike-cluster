@@ -20,7 +20,7 @@
 
 # Get a list of all the
 if Chef::Config[:solo]
-  Chef::Log.warn ('This recipe uses search. Chef Solo does not support search.')
+  Chef::Log.warn 'This recipe uses search. Chef Solo does not support search.'
 else
   nodes = search(:node, node['aerospike']['chef']['search'].to_s)
 end

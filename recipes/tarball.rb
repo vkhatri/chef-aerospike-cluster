@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-fail 'cookbook only support aerospike community edition tarball installation' if node['aerospike']['install_edition'] != 'community'
+raise 'cookbook only support aerospike community edition tarball installation' if node['aerospike']['install_edition'] != 'community'
 
 tarball_url = if node['aerospike']['tarball_url'] == 'auto'
                 "http://www.aerospike.com/download/server/#{node['aerospike']['version']}/artifact/tgz"
