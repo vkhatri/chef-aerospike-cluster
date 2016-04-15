@@ -18,3 +18,4 @@
 #
 
 # TODO: add package dependency
+include_recipe 'aerospike-cluster::user'
