@@ -33,7 +33,7 @@ package_type = value_for_platform_family(
   'debian' => 'deb'
 )
 
-case node['aerospike']['package_url']
+case node['aerospike']['amc']['package_url']
 when 'auto'
   case node['aerospike']['install_edition']
   when 'community'
