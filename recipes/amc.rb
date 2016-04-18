@@ -33,7 +33,7 @@ package_type = value_for_platform_family(
   'debian' => 'deb'
 )
 
-case node['aerospike']['package_url']
+case node['aerospike']['amc']['package_url']
 when 'auto'
   case node['aerospike']['install_edition']
   when 'community'
@@ -41,7 +41,7 @@ when 'auto'
   when 'enterprise'
     package_url = "http://#{node['aerospike']['enterprise']['username']}:#{node['aerospike']['enterprise']['password']}@www.aerospike.com/enterprise/download/amc/#{node['aerospike']['version']}/artifact/#{package_url_suffix}"
   else
-    fail "invalid aerospike edition, valid are 'community, enterprise'"
+    raise "invalid aerospike edition, valid are 'community, enterprise'"
   end
 else
   package_url = node['aerospike']['amc']['package_url']

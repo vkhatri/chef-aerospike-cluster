@@ -34,7 +34,7 @@ when 'auto'
       %w(amazon centos redhat) => { 'default' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/el6" }
     )
   else
-    fail "invalid aerospike edition, valid are 'community, enterprise'"
+    raise "invalid aerospike edition, valid are 'community, enterprise'"
   end
 else
   package_url = node['aerospike']['package_url']
@@ -84,7 +84,7 @@ server_package_file = case node['platform']
                       when 'ubuntu', 'debian'
                         ::File.join(node['aerospike']['source_dir'], "aerospike-server-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']}.#{node['aerospike']['package_suffix']}.#{node['kernel']['machine']}.deb")
                       else
-                        fail "unknown platform #{node['platform']}"
+                        raise "unknown platform #{node['platform']}"
                       end
 
 tools_package_file = case node['platform']
@@ -93,7 +93,7 @@ tools_package_file = case node['platform']
                      when 'ubuntu', 'debian'
                        ::File.join(node['aerospike']['source_dir'], "aerospike-tools-#{node['aerospike']['version']}.#{node['aerospike']['package_suffix']}.#{node['kernel']['machine']}.deb")
                      else
-                       fail "unknown platform #{node['platform']}"
+                       raise "unknown platform #{node['platform']}"
                      end
 
 package "aerospike-server-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']}-#{node['aerospike']['package_suffix']}" do
