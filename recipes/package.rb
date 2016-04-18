@@ -41,7 +41,7 @@ else
 end
 
 package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']}-#{node['aerospike']['package_suffix']}.tgz")
-package_checksum = package_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version'], node['aerospike']['package_suffix'])
+package_checksum = package_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version'], node['aerospike']['package_suffix']) if node['aerospike']['checksum_verify']
 
 # download tarball
 if node['aerospike']['install_edition'] == 'enterprise'
@@ -57,7 +57,7 @@ if node['aerospike']['install_edition'] == 'enterprise'
 else
   remote_file package_file do
     source package_url
-    checksum package_checksum
+    checksum package_checksum if node['aerospike']['checksum_verify']
     owner node['aerospike']['user']
     group node['aerospike']['group']
     not_if { ::File.exist?(::File.join(node['aerospike']['source_dir'], 'asinstall')) }

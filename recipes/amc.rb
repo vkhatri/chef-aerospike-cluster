@@ -47,7 +47,7 @@ else
   package_url = node['aerospike']['amc']['package_url']
 end
 
-package_checksum = amc_package_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version'], package_url_suffix)
+package_checksum = amc_package_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version'], package_url_suffix) if node['aerospike']['checksum_verify']
 package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-amc-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']}#{package_suffix}.#{node['kernel']['machine']}.#{package_type}")
 
 # download tarball
@@ -64,7 +64,7 @@ if node['aerospike']['install_edition'] == 'enterprise'
 else
   remote_file package_file do
     source package_url
-    checksum package_checksum
+    checksum package_checksum if node['aerospike']['checksum_verify']
     owner node['aerospike']['user']
     group node['aerospike']['group']
   end
