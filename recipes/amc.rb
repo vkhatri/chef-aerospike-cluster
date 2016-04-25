@@ -37,9 +37,9 @@ case node['aerospike']['amc']['package_url']
 when 'auto'
   case node['aerospike']['install_edition']
   when 'community'
-    package_url = "http://www.aerospike.com/download/amc/#{node['aerospike']['version']}/artifact/#{package_url_suffix}"
+    package_url = "http://www.aerospike.com/download/amc/#{node['aerospike']['amc']['version']}/artifact/#{package_url_suffix}"
   when 'enterprise'
-    package_url = "http://#{node['aerospike']['enterprise']['username']}:#{node['aerospike']['enterprise']['password']}@www.aerospike.com/enterprise/download/amc/#{node['aerospike']['version']}/artifact/#{package_url_suffix}"
+    package_url = "http://#{node['aerospike']['enterprise']['username']}:#{node['aerospike']['enterprise']['password']}@www.aerospike.com/enterprise/download/amc/#{node['aerospike']['amc']['version']}/artifact/#{package_url_suffix}"
   else
     raise "invalid aerospike edition, valid are 'community, enterprise'"
   end
@@ -47,8 +47,8 @@ else
   package_url = node['aerospike']['amc']['package_url']
 end
 
-package_checksum = amc_package_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version'], package_url_suffix) if node['aerospike']['checksum_verify']
-package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-amc-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']}#{package_suffix}.#{node['kernel']['machine']}.#{package_type}")
+package_checksum = amc_package_sha256sum(node['aerospike']['install_edition'], node['aerospike']['amc']['version'], package_url_suffix) if node['aerospike']['checksum_verify']
+package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-amc-#{node['aerospike']['install_edition']}-#{node['aerospike']['amc']['version']}#{package_suffix}.#{node['kernel']['machine']}.#{package_type}")
 
 # download tarball
 if node['aerospike']['install_edition'] == 'enterprise'
@@ -74,7 +74,7 @@ node['aerospike']['amc']['packages'].each do |p|
   package p
 end
 
-package "aerospike-amc-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']}#{package_suffix}" do
+package "aerospike-amc-#{node['aerospike']['install_edition']}-#{node['aerospike']['amc']['version']}#{package_suffix}" do
   source package_file
   provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
 end

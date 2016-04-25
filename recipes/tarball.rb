@@ -28,8 +28,6 @@ tarball_url = if node['aerospike']['tarball_url'] == 'auto'
 tarball_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-community-#{node['aerospike']['version']}.tar.gz")
 tarball_checksum = tarball_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version']) if node['aerospike']['checksum_verify']
 
-include_recipe 'aerospike-cluster::user'
-
 [node['aerospike']['source_dir']
 ].each do |dir|
   directory dir do
