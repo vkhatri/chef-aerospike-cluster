@@ -26,9 +26,7 @@ tarball_url = if node['aerospike']['tarball_url'] == 'auto'
               end
 
 tarball_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-community-#{node['aerospike']['version']}.tar.gz")
-tarball_checksum = tarball_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version'])
-
-include_recipe 'aerospike-cluster::user'
+tarball_checksum = tarball_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version']) if node['aerospike']['checksum_verify']
 
 [node['aerospike']['source_dir']
 ].each do |dir|
@@ -50,7 +48,7 @@ end
 # download tarball
 remote_file tarball_file do
   source tarball_url
-  checksum tarball_checksum
+  checksum tarball_checksum if node['aerospike']['checksum_verify']
   owner node['aerospike']['user']
   group node['aerospike']['group']
   not_if { ::File.exist?(::File.join(node['aerospike']['source_dir'], 'aerospike-server', 'bin', 'aerospike')) }

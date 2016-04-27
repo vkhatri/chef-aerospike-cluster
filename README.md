@@ -79,6 +79,8 @@ This cookbook was tested for Aerospike v3.6.3.
 
 * `default['aerospike']['tarball_url']` (default: `auto`): aerospike tarball url
 
+* `default['aerospike']['checksum_verify']` (default: `true`): checking checksum of aerospike and amc tarballs/packages
+
 * `default['aerospike']['notify_restart']` (default: `true`): whether to restart aerospike service on configuration file change
 
 * `default['aerospike']['install_method']` (default: `tarball`): aerospike install method, options: tarball
@@ -231,6 +233,8 @@ This cookbook was tested for Aerospike v3.6.3.
 
 
 ## AMC Attributes
+
+* `default['aerospike']['amc']['version']` (default: `3.6.3`): amc version
 
 * `default['aerospike']['amc']['conf_dir']` (default: `/etc/amc/config`): amc config directory
 
