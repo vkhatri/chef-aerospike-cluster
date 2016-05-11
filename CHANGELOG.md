@@ -3,6 +3,23 @@ aerospike-cluster CHANGELOG
 
 This file is used to list changes made in each version of the aerospike-cluster cookbook.
 
+0.1.5
+-----
+
+- Oleksandr Sakharchuk - Fix foodcritic
+
+- Oleksandr Sakharchuk - Fix a typo with attribure for package_url
+
+- Oleksandr Sakharchuk - Added user cookbook as dependency
+
+- Oleksandr Sakharchuk - Fix travis and typo
+
+- Oleksandr Sakharchuk - Add atrribute to disable cheksum checking
+
+- Oleksandr Sakharchuk - Added support for amc version attribute
+
+- Oleksandr Sakharchuk - Fixed recipes dependencies
+
 0.1.3
 -----
 
