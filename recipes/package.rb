@@ -24,14 +24,14 @@ when 'auto'
     package_url = value_for_platform(
       'ubuntu' => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/ubuntu12" },
       'debian' => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/debian#{node['platform_version']}" },
-      %w(amazon centos redhat) => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/el6" }
+      %w(amazon centos redhat) => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/#{node['aerospike']['package_suffix']}" }
     )
   when 'enterprise'
     basic_auth = node['aerospike']['enterprise']['username'] + ':' + node['aerospike']['enterprise']['password']
     package_url = value_for_platform(
       'ubuntu' => { 'default' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/ubuntu12" },
       'debian' => { 'default' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/debian#{node['platform_version']}" },
-      %w(amazon centos redhat) => { 'default' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/el6" }
+      %w(amazon centos redhat) => { 'default' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/#{node['aerospike']['package_suffix']}" }
     )
   else
     raise "invalid aerospike edition, valid are 'community, enterprise'"
@@ -87,21 +87,25 @@ server_package_file = case node['platform']
                         raise "unknown platform #{node['platform']}"
                       end
 
+# Tools package could be with a different number. Example with node['aerospike']['version']='3.8.2.3':
+# - aerospike-server-community-3.8.2.3-1.el7.x86_64.rpm
+# - aerospike-tools-3.8.2-1.el7.x86_64.rpm
+package_version = node['aerospike']['version'].split('.')[0..2].join('.')
 tools_package_file = case node['platform']
                      when 'redhat', 'amazon', 'fedora', 'centos'
-                       ::File.join(node['aerospike']['source_dir'], "aerospike-tools-#{node['aerospike']['version']}-1.#{node['aerospike']['package_suffix']}.#{node['kernel']['machine']}.rpm")
+                       ::File.join(node['aerospike']['source_dir'], "aerospike-tools-#{package_version}-1.#{node['aerospike']['package_suffix']}.#{node['kernel']['machine']}.rpm")
                      when 'ubuntu', 'debian'
-                       ::File.join(node['aerospike']['source_dir'], "aerospike-tools-#{node['aerospike']['version']}.#{node['aerospike']['package_suffix']}.#{node['kernel']['machine']}.deb")
+                       ::File.join(node['aerospike']['source_dir'], "aerospike-tools-#{package_version}.#{node['aerospike']['package_suffix']}.#{node['kernel']['machine']}.deb")
                      else
                        raise "unknown platform #{node['platform']}"
                      end
 
-package "aerospike-server-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']}-#{node['aerospike']['package_suffix']}" do
+package server_package_file do
   source server_package_file
   provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
 end
 
-package "aerospike-tools-#{node['aerospike']['version']}-#{node['aerospike']['package_suffix']}" do
+package tools_package_file do
   source tools_package_file
   provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
 end
