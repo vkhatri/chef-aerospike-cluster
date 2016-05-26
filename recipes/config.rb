@@ -17,14 +17,15 @@
 # limitations under the License.
 #
 
-[node['aerospike']['conf_dir'],
- node['aerospike']['log_dir'],
- node['aerospike']['work_dir'],
- node['aerospike']['data_dir'],
- node['aerospike']['smd_dir'],
- node['aerospike']['config']['mod-lua']['user-path'],
- node['aerospike']['config']['mod-lua']['system-path'],
- node['aerospike']['config']['service']['work-directory']
+[
+  node['aerospike']['conf_dir'],
+  node['aerospike']['log_dir'],
+  node['aerospike']['work_dir'],
+  node['aerospike']['data_dir'],
+  node['aerospike']['smd_dir'],
+  node['aerospike']['config']['mod-lua']['user-path'],
+  node['aerospike']['config']['mod-lua']['system-path'],
+  node['aerospike']['config']['service']['work-directory']
 ].each do |d|
   directory d do
     owner node['aerospike']['user']
@@ -50,9 +51,9 @@ service 'aerospike' do
   supports :restart => true, :start => true, :stop => true, :status => true, :reload => false
   action node['aerospike']['service_action']
   case node['platform']
-    when 'centos'
-      if node['platform_version'].to_f >= 7
-        provider Chef::Provider::Service::Systemd
-      end
+  when 'centos'
+    if node['platform_version'].to_f >= 7
+      provider Chef::Provider::Service::Systemd
     end
+  end
 end
