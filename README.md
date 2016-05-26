@@ -1,7 +1,7 @@
 aerospike-cluster Cookbook
 ================
 
-[![Cookbook](http://img.shields.io/badge/cookbook-v0.1.5-green.svg)](https://github.com/vkhatri/chef-aerospike-cluster)[![Build Status](https://travis-ci.org/vkhatri/chef-aerospike-cluster.svg?branch=master)](https://travis-ci.org/vkhatri/chef-aerospike-cluster)
+[![Cookbook](http://img.shields.io/badge/cookbook-v0.1.6-green.svg)](https://github.com/vkhatri/chef-aerospike-cluster)[![Build Status](https://travis-ci.org/vkhatri/chef-aerospike-cluster.svg?branch=master)](https://travis-ci.org/vkhatri/chef-aerospike-cluster)
 
 This is a [Chef] cookbook to manage [Aerospike].
 
@@ -10,7 +10,7 @@ This is a [Chef] cookbook to manage [Aerospike].
 ### Most Recent Release
 
 ```
-cookbook 'aerospike-cluster', '~> 0.1.5'
+cookbook 'aerospike-cluster', '~> 0.1.6'
 ```
 
 ### From Git
@@ -27,6 +27,7 @@ https://github.com/vkhatri/chef-aerospike-cluster
 ## Supported OS
 
 This cookbook was tested on Amazon Linux & Ubuntu 14.04 and expected to work on other RHEL platforms.
+Recently Aerospike added support for systemd tested on CentOS7 and expected to work on rhel7, Debian8 with systemd compatibility.
 
 
 ## Supported Edition
@@ -39,7 +40,7 @@ Cookbook supports both Aerospike `Community` and `Enterprise` edition.
 
 ## Supported Aerospike Version
 
-This cookbook was tested for Aerospike v3.6.3.
+This cookbook was tested for Aerospike v3.8.2.3. But default is 3.6.3
 
 
 ## TODO

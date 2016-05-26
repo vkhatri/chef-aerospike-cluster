@@ -49,4 +49,10 @@ end
 service 'aerospike' do
   supports :restart => true, :start => true, :stop => true, :status => true, :reload => false
   action node['aerospike']['service_action']
+  case node['platform']
+    when 'centos'
+      if node['platform_version'].to_f >= 7
+        provider Chef::Provider::Service::Systemd
+      end
+    end
 end

@@ -1,16 +1,75 @@
 ---
+<%
+  #--------------------------------------------------------------------------
+  # the driver_plugin can be overridden with an environment variable:
+  #   $ KITCHEN_DRIVER=docker vagrant
+  # if not specified, defaults are used:
+  #   - docker
+  #--------------------------------------------------------------------------
+  kitchen_driver = ENV['KITCHEN_DRIVER'] || 'docker'
+  puts "-----> driver_plugin: #{kitchen_driver.to_s}"
+%>
+
+settings:
+  parallel: true
+
 driver:
-  name: vagrant
+  name: <%= kitchen_driver %>
+  <% if kitchen_driver == 'docker' %>
+  privileged: true
+  <% end %>
+
+driver_config:
+  require_chef_omnibus: true
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
 
 platforms:
   - name: ubuntu-14.04
-  - name: centos-7.1
+    driver_config:
+      <% if kitchen_driver == 'docker' %>
+      image: ubuntu:14.04
+      disable_upstart: false
+      provision_command:
+        - /usr/bin/apt-get update
+        - /usr/bin/apt-get install tar curl apt-transport-https net-tools -y
+      <% end %>
+      platform: ubuntu
+  - name: centos-7.2
+    driver_config:
+      <% if kitchen_driver == 'docker' %>
+      image: centos:7
+      run_command: /sbin/init
+      provision_command:
+        - /bin/yum install -y initscripts net-tools
+        - cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done
+        - rm -f /lib/systemd/system/multi-user.target.wants/*
+        - rm -f /etc/systemd/system/*.wants/*
+        - rm -f /lib/systemd/system/local-fs.target.wants/*
+        - rm -f /lib/systemd/system/sockets.target.wants/*udev*
+        - rm -f /lib/systemd/system/sockets.target.wants/*initctl*
+        - rm -f /lib/systemd/system/basic.target.wants/*
+        - rm -f /lib/systemd/system/anaconda.target.wants/*
+        - sed -i 's/.*UseDNS.*/UseDNS no/g' /etc/ssh/sshd_config
+        - sed -i 's/.*UsePAM.*yes/UsePAM no/g' /etc/ssh/sshd_config
+        # - sed -i 's/PasswordAuthentication.*no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+        - sed -i 's/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g' /etc/ssh/sshd_config
+        - sed -i 's/.*PidFile.*/PidFile \/tmp\/sshd.pid/g' /etc/ssh/sshd_config
+        - systemctl enable sshd.service
+      volume: /sys/fs/cgroup
+      <% end %>
+      platform: centos
 
 suites:
   - name: default
     run_list:
       - recipe[aerospike-cluster::default]
     attributes:
+      aerospike:
+        checksum_verify: false
+        install_method: 'package'
+        version: '3.8.2.3'
+        amc:
+          version: '3.6.8'
+          <%= "host: ''" if kitchen_driver == 'docker' %>
