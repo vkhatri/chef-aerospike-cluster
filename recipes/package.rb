@@ -22,14 +22,20 @@ when 'auto'
   case node['aerospike']['install_edition']
   when 'community'
     package_url = value_for_platform(
-      'ubuntu' => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/ubuntu12" },
+      'ubuntu' => {
+        '~> 14.04' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/ubuntu14",
+        'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/ubuntu12"
+      },
       'debian' => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/debian#{node['platform_version']}" },
       %w(amazon centos redhat) => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/#{node['aerospike']['package_suffix']}" }
     )
   when 'enterprise'
     basic_auth = node['aerospike']['enterprise']['username'] + ':' + node['aerospike']['enterprise']['password']
     package_url = value_for_platform(
-      'ubuntu' => { 'default' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/ubuntu12" },
+      'ubuntu' => {
+        '~> 14.04' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/ubuntu14",
+        'default' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/ubuntu12"
+      },
       'debian' => { 'default' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/debian#{node['platform_version']}" },
       %w(amazon centos redhat) => { 'default' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/#{node['aerospike']['package_suffix']}" }
     )
