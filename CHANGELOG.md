@@ -3,6 +3,21 @@ aerospike-cluster CHANGELOG
 
 This file is used to list changes made in each version of the aerospike-cluster cookbook.
 
+0.1.6
+-----
+
+- Oleksandr Sakharchuk - Add RHEL7 support, after [last Aerospike release](http://www.aerospike.com/download/server/notes.html#3.8.2.1)
+
+- Oleksandr Sakharchuk - Add Ubuntu-14.04 support
+
+- Oleksandr Sakharchuk - Update kitchen config
+
+- Oleksandr Sakharchuk - Add integration tests for old (3.6.3) and latest (3.8.2.3)
+
+- Oleksandr Sakharchuk - Update kitchen test to docker
+
+- Oleksandr Sakharchuk - Update travis-ci to use docker
+
 0.1.5
 -----
 
