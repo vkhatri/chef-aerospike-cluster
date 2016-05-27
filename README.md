@@ -1,7 +1,7 @@
 aerospike-cluster Cookbook
 ================
 
-[![Cookbook](http://img.shields.io/badge/cookbook-v0.1.6-green.svg)](https://github.com/vkhatri/chef-aerospike-cluster)[![Build Status](https://travis-ci.org/vkhatri/chef-aerospike-cluster.svg?branch=master)](https://travis-ci.org/vkhatri/chef-aerospike-cluster)
+[![Cookbook](https://img.shields.io/github/tag/vkhatri/chef-aerospike-cluster.svg)](https://github.com/vkhatri/chef-aerospike-cluster)[![Build Status](https://travis-ci.org/vkhatri/chef-aerospike-cluster.svg?branch=master)](https://travis-ci.org/vkhatri/chef-aerospike-cluster)[![supermarket.chef.io](https://img.shields.io/cookbook/v/aerospike-cluster.svg)](https://supermarket.chef.io/cookbooks/aerospike-cluster)]
 
 This is a [Chef] cookbook to manage [Aerospike].
 
