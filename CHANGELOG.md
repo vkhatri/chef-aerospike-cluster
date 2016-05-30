@@ -2,6 +2,12 @@ aerospike-cluster CHANGELOG
 ===========================
 
 This file is used to list changes made in each version of the aerospike-cluster cookbook.
+0.1.7
+-----
+
+- Oleksandr Sakharchuk - Add test suit case for multicast mode cluster
+
+- Oleksandr Sakharchuk - Update `aerospike-cluster::cluster` to ignore `mesh` configuration for `mode: multicast` which cause an error
 
 0.1.6
 -----

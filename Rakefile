@@ -34,9 +34,25 @@ task :spec do
   RSpec::Core::RakeTask.new(:spec)
 end
 
+
 begin
   require 'kitchen/rake_tasks'
   Kitchen::RakeTasks.new
+  namespace "kitchen" do
+    desc "run multicast tests"
+    task :multicast do
+      system('bundle exec kitchen converge --concurrency 2 multicast')
+      system('bundle exec kitchen verify --concurrency 2 multicast')
+      system('bundle exec kitchen destroy multicast')
+    end
+    desc "run default tests"
+    task :default do
+      system('bundle exec kitchen test default')
+    end
+    desc 'Run all test suites'
+    task :all_suites => %w(kitchen:default kitchen:multicast)
+  end
 rescue LoadError
   puts '>>>>> Kitchen gem not loaded, omitting tasks' unless ENV['CI']
 end
+
