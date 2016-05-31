@@ -50,6 +50,7 @@ end
 service 'aerospike' do
   supports :restart => true, :start => true, :stop => true, :status => true, :reload => false
   action node['aerospike']['service_action']
+  notifies :restart, 'service[amc]', :immediately
   case node['platform']
   when 'centos'
     if node['platform_version'].to_f >= 7
