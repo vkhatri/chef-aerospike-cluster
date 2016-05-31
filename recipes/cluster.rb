@@ -26,7 +26,7 @@ when 'mesh'
     Chef::Log.warn 'This recipe uses search. Chef Solo does not support search.'
     raise '[ERROR] Can\'t configure aerospike cluster. Chef Solo does not support search.'
   end
-  if node['aerospike']['chef']['search'].to_s.is_empty?
+  if node['aerospike']['chef']['search'].to_s.empty?
     raise "[ERROR] Can't configure aerospike cluster, node['aerospike']['chef']['search'] is empty."
   else
     nodes = search(:node, node['aerospike']['chef']['search'].to_s)
