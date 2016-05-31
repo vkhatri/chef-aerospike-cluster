@@ -49,7 +49,7 @@ package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-#{
 package_checksum = package_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version'], node['aerospike']['package_suffix']) if node['aerospike']['checksum_verify']
 
 # download tarball
-remote_file package_file do
+remote_file "Download #{package_file}" do
   source package_url
   checksum package_checksum if node['aerospike']['checksum_verify']
   headers('Authorization' => "Basic #{Base64.encode64("#{node['aerospike']['enterprise']['username']}:#{node['aerospike']['enterprise']['password']}").delete("\n")}") if node['aerospike']['install_edition'] == 'enterprise'
@@ -68,7 +68,7 @@ execute 'extract_aerospike_package' do
   creates ::File.join(node['aerospike']['source_dir'], 'asinstall')
 end
 
-remote_file package_file do
+remote_file "Delete #{package_file}" do
   action :delete
 end
 

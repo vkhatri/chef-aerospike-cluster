@@ -26,7 +26,7 @@
   node['aerospike']['config']['mod-lua']['user-path'],
   node['aerospike']['config']['mod-lua']['system-path'],
   node['aerospike']['config']['service']['work-directory']
-].each do |d|
+].uniq.each do |d|
   directory d do
     owner node['aerospike']['user']
     group node['aerospike']['group']
