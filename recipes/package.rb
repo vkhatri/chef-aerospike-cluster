@@ -30,14 +30,13 @@ when 'auto'
       %w(amazon centos redhat) => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/#{node['aerospike']['package_suffix']}" }
     )
   when 'enterprise'
-    basic_auth = node['aerospike']['enterprise']['username'] + ':' + node['aerospike']['enterprise']['password']
     package_url = value_for_platform(
       'ubuntu' => {
-        '~> 14.04' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/ubuntu14",
-        'default' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/ubuntu12"
+        '~> 14.04' => "http://www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/ubuntu14",
+        'default' => "http://www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/ubuntu12"
       },
-      'debian' => { 'default' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/debian#{node['platform_version']}" },
-      %w(amazon centos redhat) => { 'default' => "http://#{basic_auth}@www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/#{node['aerospike']['package_suffix']}" }
+      'debian' => { 'default' => "http://www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/debian#{node['platform_version']}" },
+      %w(amazon centos redhat) => { 'default' => "http://www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/#{node['aerospike']['package_suffix']}" }
     )
   else
     raise "invalid aerospike edition, valid are 'community, enterprise'"
@@ -50,24 +49,13 @@ package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-#{
 package_checksum = package_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version'], node['aerospike']['package_suffix']) if node['aerospike']['checksum_verify']
 
 # download tarball
-if node['aerospike']['install_edition'] == 'enterprise'
-  # temporary fix for issue - https://github.com/vkhatri/chef-aerospike-cluster/issues/8
-  execute "download #{package_file}" do
-    user node['aerospike']['user']
-    group node['aerospike']['group']
-    umask node['aerospike']['umask']
-    cwd node['aerospike']['parent_dir']
-    command "curl --verbose --location --output #{package_file} --user #{node['aerospike']['enterprise']['username']}:#{node['aerospike']['enterprise']['password']} #{package_url}"
-    not_if { ::File.exist?(::File.join(node['aerospike']['source_dir'], 'asinstall')) }
-  end
-else
-  remote_file package_file do
-    source package_url
-    checksum package_checksum if node['aerospike']['checksum_verify']
-    owner node['aerospike']['user']
-    group node['aerospike']['group']
-    not_if { ::File.exist?(::File.join(node['aerospike']['source_dir'], 'asinstall')) }
-  end
+remote_file package_file do
+  source package_url
+  checksum package_checksum if node['aerospike']['checksum_verify']
+  headers('Authorization' => "Basic #{Base64.encode64("#{node['aerospike']['enterprise']['username']}:#{node['aerospike']['enterprise']['password']}").delete("\n")}") if node['aerospike']['install_edition'] == 'enterprise'
+  owner node['aerospike']['user']
+  group node['aerospike']['group']
+  not_if { ::File.exist?(::File.join(node['aerospike']['source_dir'], 'asinstall')) }
 end
 
 # extract tarball
