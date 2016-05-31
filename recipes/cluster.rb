@@ -22,17 +22,19 @@
 
 case node['aerospike']['config']['network']['heartbeat']['mode']
 when 'mesh'
-  if Chef::Config[:solo]
+  if Chef::Config[:solo] && !node['aerospike']['chef']['search'].to_s.empty?
     Chef::Log.warn 'This recipe uses search. Chef Solo does not support search.'
     raise '[ERROR] Can\'t configure aerospike cluster. Chef Solo does not support search.'
   end
   if node['aerospike']['chef']['search'].to_s.empty?
-    raise "[ERROR] Can't configure aerospike cluster, node['aerospike']['chef']['search'] is empty."
+    node.default['aerospike']['config']['network']['heartbeat']['mesh-seed-address-port'] = ["#{node['ipaddress']} #{node['aerospike']['config']['network']['heartbeat']['port']}"] if node['aerospike']['config']['network']['heartbeat']['mesh-seed-address-port'].empty?
   else
     nodes = search(:node, node['aerospike']['chef']['search'].to_s)
-  end
-  nodes.sort_by! { |n| n['ipaddress'] }
-  nodes.map! { |n| "#{n['ipaddress']} #{n['aerospike']['config']['network']['heartbeat']['port']}" }
 
-  node.default['aerospike']['config']['network']['heartbeat']['mesh-seed-address-port'] = nodes
+    nodes.sort_by! { |n| n['ipaddress'] }
+    nodes.map! { |n| "#{n['ipaddress']} #{n['aerospike']['config']['network']['heartbeat']['port']}" }
+
+    node.default['aerospike']['config']['network']['heartbeat']['mesh-seed-address-port'] = nodes
+  end
+
 end
