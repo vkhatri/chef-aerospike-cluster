@@ -6,7 +6,7 @@ services:
 branches:
   only:
     - master
-    - /^(i:ci)-\d\.\d\.\d/
+    - /^(i:ci)-v.*$/
 
 language: ruby
 bundler_args: --without integration development
