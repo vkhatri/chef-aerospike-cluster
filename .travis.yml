@@ -3,6 +3,11 @@ sudo: required
 services:
   - docker
 
+branches:
+  only:
+    - master
+    - /^(i:ci)-\d\.\d\.\d/
+
 language: ruby
 bundler_args: --without integration development
 rvm:
