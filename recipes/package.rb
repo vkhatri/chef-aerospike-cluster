@@ -50,6 +50,7 @@ package_checksum = package_sha256sum(node['aerospike']['install_edition'], node[
 
 # download tarball
 remote_file "Download #{package_file}" do
+  path package_file
   source package_url
   checksum package_checksum if node['aerospike']['checksum_verify']
   headers('Authorization' => "Basic #{Base64.encode64("#{node['aerospike']['enterprise']['username']}:#{node['aerospike']['enterprise']['password']}").delete("\n")}") if node['aerospike']['install_edition'] == 'enterprise'
@@ -69,6 +70,7 @@ execute 'extract_aerospike_package' do
 end
 
 remote_file "Delete #{package_file}" do
+  path package_file
   action :delete
 end
 
