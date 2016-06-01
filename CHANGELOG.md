@@ -2,6 +2,7 @@ aerospike-cluster CHANGELOG
 ===========================
 
 This file is used to list changes made in each version of the aerospike-cluster cookbook.
+
 0.1.8 (01/06/2015)
 ------------------
 
@@ -16,71 +17,60 @@ This file is used to list changes made in each version of the aerospike-cluster 
 0.1.7 (31/05/2015)
 ------------------
 
-- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Add test suit case for multicast mode cluster
-
-- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Update `aerospike-cluster::cluster` to ignore `mesh` configuration for `mode: multicast` which cause an error
+- [Oleksandr Sakharchuk](https://github.com/pioneerit):
+  - Add test suit case for multicast mode cluster
+  - Update `aerospike-cluster::cluster` to ignore `mesh` configuration for `mode: multicast` which cause an error
 
 0.1.6 (26/05/2015)
 ------------------
 
-- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Add RHEL7 support, after [last Aerospike release](http://www.aerospike.com/download/server/notes.html#3.8.2.1)
-
-- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Add Ubuntu-14.04 support
-
-- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Update kitchen config
-
-- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Add integration tests for old (3.6.3) and latest (3.8.2.3)
-
-- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Update kitchen test to docker
-
-- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Update travis-ci to use docker
+- [Oleksandr Sakharchuk](https://github.com/pioneerit):
+  - Add RHEL7 support, after [last Aerospike release](http://www.aerospike.com/download/server/notes.html#3.8.2.1)
+  - Add Ubuntu-14.04 support
+  - Update kitchen config
+  - Add integration tests for old (3.6.3) and latest (3.8.2.3)
+  - Update kitchen test to docker
+  - Update travis-ci to use docker
 
 0.1.5 (11/05/2016)
 ------------------
 
-- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Fix foodcritic
-
-- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Fix a typo with attribure for package_url
-
-- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Added user cookbook as dependency
-
-- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Fix travis and typo
-
-- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Add atrribute to disable cheksum checking
-
-- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Added support for amc version attribute
-
-- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Fixed recipes dependencies
+- [Oleksandr Sakharchuk](https://github.com/pioneerit):
+  - Fix foodcritic
+  - Fix a typo with attribure for package_url
+  - Added user cookbook as dependency
+  - Fix travis and typo
+  - Add atrribute to disable cheksum checking
+  - Added support for amc version attribute
+  - Fixed recipes dependencies
 
 0.1.3 (28/12/2015)
 ------------------
 
-- Blair Hamilton - adding clustering via chef server
+- [Blair Hamilton](https://github.com/blairham) - adding clustering via chef server
 
-- Virender Khatri - #10, fix enable_test_namespace config disable for test namespace
-
-- Virender Khatri - better namespace formatting
-
-- Virender Khatri - fix rubocop #14
+- [Virender Khatri](https://github.com/vkhatri):
+  - #10, fix enable_test_namespace config disable for test namespace
+  - better namespace formatting
+  - fix rubocop #14
 
 0.1.2 (31/10/2015)
 ------------------
 
-- Virender Khatri - #7, added enterprise edition support
-
-- Virender Khatri - #4, added amc setup
-
-- Virender Khatri - #3, make test namespace setup optional
+- [Virender Khatri](https://github.com/vkhatri):
+  - #7, added enterprise edition support
+  - #4, added amc setup
+  - #3, make test namespace setup optional
 
 0.1.1 (26/10/2015)
 ------------------
 
-- Virender Khatri - #1, added package installation support
+- [Virender Khatri](https://github.com/vkhatri) - #1, added package installation support
 
 0.1.0 (24/10/2015)
 ------------------
 
-- Virender Khatri - Initial release of aerospike-cluster
+- [Virender Khatri](https://github.com/vkhatri) - Initial release of aerospike-cluster
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
