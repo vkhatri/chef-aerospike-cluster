@@ -2,47 +2,58 @@ aerospike-cluster CHANGELOG
 ===========================
 
 This file is used to list changes made in each version of the aerospike-cluster cookbook.
-0.1.7
------
+0.1.8 (01/06/2015)
+------------------
 
-- Oleksandr Sakharchuk - Add test suit case for multicast mode cluster
+- [Oleksandr Sakharchuk](https://github.com/pioneerit):
+  - Remove cloning resource attributes from prior resource (CHEF-3694)
+  - Permanent fix for #8 - remote_file for enterprise edition with authentication
+  - After PR #12 attribute `mesh-seed-address-port` not needed.
+  - Update cluster.rb recipe for default value and support chef-solo if possible
+  - Restart `amc` applicatoin if `aerospike` was restarted
+  - test update
 
-- Oleksandr Sakharchuk - Update `aerospike-cluster::cluster` to ignore `mesh` configuration for `mode: multicast` which cause an error
+0.1.7 (31/05/2015)
+------------------
 
-0.1.6
------
+- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Add test suit case for multicast mode cluster
 
-- Oleksandr Sakharchuk - Add RHEL7 support, after [last Aerospike release](http://www.aerospike.com/download/server/notes.html#3.8.2.1)
+- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Update `aerospike-cluster::cluster` to ignore `mesh` configuration for `mode: multicast` which cause an error
 
-- Oleksandr Sakharchuk - Add Ubuntu-14.04 support
+0.1.6 (26/05/2015)
+------------------
 
-- Oleksandr Sakharchuk - Update kitchen config
+- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Add RHEL7 support, after [last Aerospike release](http://www.aerospike.com/download/server/notes.html#3.8.2.1)
 
-- Oleksandr Sakharchuk - Add integration tests for old (3.6.3) and latest (3.8.2.3)
+- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Add Ubuntu-14.04 support
 
-- Oleksandr Sakharchuk - Update kitchen test to docker
+- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Update kitchen config
 
-- Oleksandr Sakharchuk - Update travis-ci to use docker
+- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Add integration tests for old (3.6.3) and latest (3.8.2.3)
 
-0.1.5
------
+- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Update kitchen test to docker
 
-- Oleksandr Sakharchuk - Fix foodcritic
+- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Update travis-ci to use docker
 
-- Oleksandr Sakharchuk - Fix a typo with attribure for package_url
+0.1.5 (11/05/2016)
+------------------
 
-- Oleksandr Sakharchuk - Added user cookbook as dependency
+- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Fix foodcritic
 
-- Oleksandr Sakharchuk - Fix travis and typo
+- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Fix a typo with attribure for package_url
 
-- Oleksandr Sakharchuk - Add atrribute to disable cheksum checking
+- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Added user cookbook as dependency
 
-- Oleksandr Sakharchuk - Added support for amc version attribute
+- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Fix travis and typo
 
-- Oleksandr Sakharchuk - Fixed recipes dependencies
+- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Add atrribute to disable cheksum checking
 
-0.1.3
------
+- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Added support for amc version attribute
+
+- [Oleksandr Sakharchuk](https://github.com/pioneerit) - Fixed recipes dependencies
+
+0.1.3 (28/12/2015)
+------------------
 
 - Blair Hamilton - adding clustering via chef server
 
@@ -52,8 +63,8 @@ This file is used to list changes made in each version of the aerospike-cluster 
 
 - Virender Khatri - fix rubocop #14
 
-0.1.2
------
+0.1.2 (31/10/2015)
+------------------
 
 - Virender Khatri - #7, added enterprise edition support
 
@@ -61,13 +72,13 @@ This file is used to list changes made in each version of the aerospike-cluster 
 
 - Virender Khatri - #3, make test namespace setup optional
 
-0.1.1
------
+0.1.1 (26/10/2015)
+------------------
 
 - Virender Khatri - #1, added package installation support
 
-0.1.0
------
+0.1.0 (24/10/2015)
+------------------
 
 - Virender Khatri - Initial release of aerospike-cluster
 
