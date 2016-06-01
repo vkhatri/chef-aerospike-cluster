@@ -8,8 +8,8 @@ This file is used to list changes made in each version of the aerospike-cluster 
 
 - [Oleksandr Sakharchuk](https://github.com/pioneerit):
   - Remove cloning resource attributes from prior resource (CHEF-3694)
-  - Permanent fix for #8 - remote_file for enterprise edition with authentication
-  - After PR #12 attribute `mesh-seed-address-port` not needed.
+  - Permanent fix for [#8](https://github.com/vkhatri/chef-aerospike-cluster/issues/8) - remote_file for enterprise edition with authentication
+  - After PR [#12](https://github.com/vkhatri/chef-aerospike-cluster/pull/12) attribute `mesh-seed-address-port` not needed.
   - Update cluster.rb recipe for default value and support chef-solo if possible
   - Restart `amc` applicatoin if `aerospike` was restarted
   - test update
