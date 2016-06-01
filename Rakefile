@@ -58,6 +58,9 @@ namespace 'kitchen' do
     instances.map(&:verify)
     instances.map(&:destroy)
   end
+
+  desc 'Run all test suites'
+  task :all_suites => %w(kitchen:default kitchen:multicast)
 end
 
 
