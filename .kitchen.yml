@@ -36,6 +36,7 @@ platforms:
         - /usr/bin/apt-get install tar curl apt-transport-https net-tools -y
       <% end %>
       platform: ubuntu
+
   - name: centos-7.2
     driver_config:
       <% if kitchen_driver == 'docker' %>
@@ -62,6 +63,7 @@ platforms:
       platform: centos
 
 suites:
+
   - name: default
     run_list:
       - recipe[aerospike-cluster::default]
@@ -72,4 +74,24 @@ suites:
         version: '3.8.2.3'
         amc:
           version: '3.6.8'
-          <%= "host: ''" if kitchen_driver == 'docker' %>
+          host: ''
+
+  - name: multicast
+    run_list:
+      - recipe[aerospike-cluster::default]
+    attributes:
+      aerospike:
+        checksum_verify: false
+        install_method: 'package'
+        version: '3.8.2.3'
+        chef:
+          search: ""
+        config:
+          network:
+            heartbeat:
+              mode: multicast
+              address: '224.2.2.4'
+              port: 9918
+        amc:
+          version: '3.6.8'
+          host: ''
