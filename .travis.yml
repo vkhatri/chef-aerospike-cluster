@@ -3,6 +3,11 @@ sudo: required
 services:
   - docker
 
+branches:
+  only:
+    - master
+    - /.*-alpha.*/
+
 language: ruby
 bundler_args: --without integration development
 rvm:

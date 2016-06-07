@@ -26,7 +26,7 @@
   node['aerospike']['config']['mod-lua']['user-path'],
   node['aerospike']['config']['mod-lua']['system-path'],
   node['aerospike']['config']['service']['work-directory']
-].each do |d|
+].uniq.each do |d|
   directory d do
     owner node['aerospike']['user']
     group node['aerospike']['group']
@@ -50,6 +50,7 @@ end
 service 'aerospike' do
   supports :restart => true, :start => true, :stop => true, :status => true, :reload => false
   action node['aerospike']['service_action']
+  notifies :restart, 'service[amc]', :immediately
   case node['platform']
   when 'centos'
     if node['platform_version'].to_f >= 7

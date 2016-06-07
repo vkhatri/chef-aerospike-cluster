@@ -25,7 +25,6 @@ default['aerospike']['config']['network']['service']['port'] = 3000
 default['aerospike']['config']['network']['heartbeat']['mode'] = 'mesh'
 default['aerospike']['config']['network']['heartbeat']['address'] = node['ipaddress']
 default['aerospike']['config']['network']['heartbeat']['port'] = 3002
-default['aerospike']['config']['network']['heartbeat']['mesh-seed-address-port'] = ["#{node['ipaddress']} #{node['aerospike']['config']['network']['heartbeat']['port']}"]
 default['aerospike']['config']['network']['heartbeat']['interval'] = 150
 default['aerospike']['config']['network']['heartbeat']['timeout'] = 10
 

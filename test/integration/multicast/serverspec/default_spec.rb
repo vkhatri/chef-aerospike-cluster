@@ -10,7 +10,7 @@ describe 'fyber_aerospike::default' do
       it { should be_listening.with('tcp') }
     end
   end
-  describe port(9918) do
+  describe port(3002) do
     it { should be_listening.with('udp') }
   end
   describe command('asinfo -v statistics -l | grep cluster_size') do
