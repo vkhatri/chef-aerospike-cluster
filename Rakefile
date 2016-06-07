@@ -66,7 +66,7 @@ namespace 'kitchen:suite' do
     end
   end
   desc 'Run all test suites'
-  task :all => Kitchen::Config.new.suites.map(&:name).map {|s| 'kitchen:' + s}
+  task :all => Kitchen::Config.new.suites.map(&:name).map {|s| 'kitchen:suite:' + s}
 end
 
 
