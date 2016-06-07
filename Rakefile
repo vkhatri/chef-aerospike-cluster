@@ -34,7 +34,6 @@ task :spec do
   RSpec::Core::RakeTask.new(:spec)
 end
 
-
 begin
   require 'kitchen/rake_tasks'
   Kitchen::RakeTasks.new
@@ -42,25 +41,32 @@ rescue LoadError
   puts '>>>>> Kitchen gem not loaded, omitting tasks' unless ENV['CI']
 end
 
-namespace 'kitchen' do
+namespace 'kitchen:suite' do
   desc 'run default tests'
   task :default do
-    instances = Kitchen::Config.new.instances.select { |instance| instance.name.include?('default') }
-
-    instances.map(&:test)
+    # instances = Kitchen::Config.new.instances.select { |instance| instance.name.include?('default') }
+    instances =  Kitchen::Config.new.instances.get_all(/default/)
+    # always cleanup before and after
+    instances.each {|instance| instance.test(:always)}
   end
 
-  desc 'Run multicast tests'
-  task :multicast do
-    instances = Kitchen::Config.new.instances.select { |instance| instance.name.include?('multicast') }
-
-    instances.map(&:converge)
-    instances.map(&:verify)
-    instances.map(&:destroy)
+  Kitchen::Config.new.suites.get_all(/^(?!default)/).each do |suite|
+    desc "Run group of #{suite.name} suite tests"
+    task suite.name.to_sym do
+      # instances = Kitchen::Config.new.instances.select { |instance| instance.name.include?('multicast') }
+      instances = Kitchen::Config.new.instances.get_all(/#{suite.name}/)
+      # Cleanup before
+      instances.map(&:destroy)
+      # Do converge before cluster verify
+      instances.map(&:converge)
+      # Verify
+      instances.map(&:verify)
+      # Cleanup after
+      instances.map(&:destroy)
+    end
   end
-
   desc 'Run all test suites'
-  task :all_suites => %w(kitchen:default kitchen:multicast)
+  task :all => Kitchen::Config.new.suites.map(&:name).map {|s| 'kitchen:' + s}
 end
 
 

@@ -16,4 +16,4 @@ rvm:
 # script: bundle exec rspec spec
 script:
   - bundle exec rake lint
-  - bundle exec rake kitchen:all_suites
+  - bundle exec rake kitchen:suite:all
