@@ -2,7 +2,7 @@
 default['aerospike']['config_attribute'] = 'config'
 
 # xdr {}
-# default['aerospike']['config']['xdr'] = {}
+default['aerospike']['config']['xdr'] = {}
 
 # cluster {}
 default['aerospike']['config']['cluster'] = {}

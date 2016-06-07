@@ -15,9 +15,11 @@ mod-lua {
 <%= as_config_generator(@config['mod-lua']) %>
 }
 
+<%- unless node['aerospike']['config']['xdr'].empty? %>
 xdr {
 <%= as_config_generator(@config['xdr']) %>
 }
+<%- end %>
 
 cluster {
 <%= as_config_generator(@config['cluster']) %>
