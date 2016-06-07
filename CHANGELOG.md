@@ -2,6 +2,13 @@ aerospike-cluster CHANGELOG
 ===========================
 
 This file is used to list changes made in each version of the aerospike-cluster cookbook.
+0.1.8 (07/06/2015)
+------------------
+- [Oleksandr Sakharchuk](https://github.com/pioneerit):
+  - Update default attribute configuration
+  - Remove notify for AMC dashsboard as problem was fixed at AMC 3.6.8.2
+  - Disable empty `xdr` section in config file, wich caused an error for EE (Enterprise Edition)
+  - Update `aerospike-cluster::amc` for installation AMC EE. Closed [#8](https://github.com/vkhatri/chef-aerospike-cluster/issues/8)
 
 0.1.8 (01/06/2015)
 ------------------
