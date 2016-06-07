@@ -23,8 +23,6 @@ default['aerospike']['config']['network']['service']['port'] = 3000
 
 # heartbeat {}
 default['aerospike']['config']['network']['heartbeat']['mode'] = 'mesh'
-default['aerospike']['config']['network']['heartbeat']['address'] = node['ipaddress']
-default['aerospike']['config']['network']['heartbeat']['port'] = 3002
 default['aerospike']['config']['network']['heartbeat']['interval'] = 150
 default['aerospike']['config']['network']['heartbeat']['timeout'] = 10
 

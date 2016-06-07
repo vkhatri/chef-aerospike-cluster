@@ -169,7 +169,7 @@ This cookbook was tested for Aerospike v3.8.2.3. But default is 3.6.3
 * `default['aerospike']['config']['mod-lua']['system-path']` (default: `/opt/aerospike/sys/udf/lua`): aerospike mod-lua attribute
 
 
-### Configuration File aerospike.conf network {} Attributes
+### Configuration File aerospike.conf [network](http://www.aerospike.com/docs/operations/configure/network) {} Attributes
 
 
 * `default['aerospike']['config']['network']['service']['address']` (default: `any`): aerospike configuration attribute
@@ -178,13 +178,14 @@ This cookbook was tested for Aerospike v3.8.2.3. But default is 3.6.3
 
 * `default['aerospike']['config']['network']['heartbeat']['mode']` (default: `mesh`): aerospike configuration attribute
 
-* `default['aerospike']['config']['network']['heartbeat']['address']` (default: `node['ipaddress']`): aerospike configuration attribute
+* `default['aerospike']['config']['network']['heartbeat']['address']` (default: `node['ipaddress']` for `mesh`; `224.2.2.4` for `multicast`): aerospike configuration attribute
 
-* `default['aerospike']['config']['network']['heartbeat']['port']` (default: `3002`): aerospike configuration attribute
+* `default['aerospike']['config']['network']['heartbeat']['port']` (default: `3002` for `mesh`; `9918` for `multicast`): aerospike configuration attribute
 
 * `default['aerospike']['config']['network']['heartbeat']['mesh-seed-address-port']` (default: `[]`): aerospike unicast cluster seed ip addresses
 
 >> as `mesh-seed-address-port` accepts multiple values, variable type is set to `Array` and parameter is rendered differently in helper method `as_config_generator`
+>> This attribute can be configuraed automaticly with Chef Search, check `aerospike-cluster::cluster` recipe
 
 
 * `default['aerospike']['config']['network']['heartbeat']['interval']` (default: `150`): aerospike configuration attribute
