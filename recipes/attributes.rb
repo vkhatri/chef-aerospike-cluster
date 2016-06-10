@@ -34,6 +34,20 @@ node.default['aerospike']['log_file'] = ::File.join(node['aerospike']['log_dir']
 # service {}
 node.default['aerospike']['config']['service']['work-directory'] = node['aerospike']['work_dir']
 
+# heartbeat {}
+node.default['aerospike']['config']['network']['heartbeat']['port'] = case node['aerospike']['config']['network']['heartbeat']['mode']
+                                                                      when 'multicast'
+                                                                        9918
+                                                                      when 'mesh'
+                                                                        3002
+                                                                      end
+node.default['aerospike']['config']['network']['heartbeat']['address'] = case node['aerospike']['config']['network']['heartbeat']['mode']
+                                                                         when 'multicast'
+                                                                           '224.2.2.4'
+                                                                         when 'mesh'
+                                                                           node['ipaddress']
+                                                                         end
+
 # mod-lua {}
 node.default['aerospike']['config']['mod-lua']['user-path'] = ::File.join(node['aerospike']['work_dir'], 'usr', 'udf', 'lua')
 node.default['aerospike']['config']['mod-lua']['system-path'] = ::File.join(node['aerospike']['work_dir'], 'sys', 'udf', 'lua')

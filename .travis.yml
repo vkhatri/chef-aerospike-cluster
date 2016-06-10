@@ -3,6 +3,11 @@ sudo: required
 services:
   - docker
 
+branches:
+  only:
+    - master
+    - /.*-alpha.*/
+
 language: ruby
 bundler_args: --without integration development
 rvm:
@@ -11,4 +16,4 @@ rvm:
 # script: bundle exec rspec spec
 script:
   - bundle exec rake lint
-  - bundle exec rake kitchen:all_suites
+  - bundle exec rake kitchen:suite:all

@@ -79,19 +79,16 @@ suites:
   - name: multicast
     run_list:
       - recipe[aerospike-cluster::default]
+      - recipe[aerospike-cluster::cluster]
     attributes:
       aerospike:
         checksum_verify: false
         install_method: 'package'
         version: '3.8.2.3'
-        chef:
-          search: ""
         config:
           network:
             heartbeat:
               mode: multicast
               address: '224.2.2.4'
-              port: 9918
         amc:
           version: '3.6.8'
-          host: ''
