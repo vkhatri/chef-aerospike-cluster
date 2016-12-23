@@ -17,91 +17,135 @@
 # limitations under the License.
 #
 
-case node['aerospike']['package_url']
+case node['aerospike']['server_package_url']
 when 'auto'
   case node['aerospike']['install_edition']
   when 'community'
-    package_url = value_for_platform(
+    server_package_url = value_for_platform(
       'ubuntu' => {
-        '~> 14.04' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/ubuntu14",
-        'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/ubuntu12"
+        '~> 14.04' => "http://aerospike.com/download/server/#{node['aerospike']['version']['server']}/artifact/ubuntu14",
+        'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']['server']}/artifact/ubuntu12"
       },
-      'debian' => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/debian#{node['platform_version']}" },
-      %w(amazon centos redhat) => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']}/artifact/#{node['aerospike']['package_suffix']}" }
+      'debian' => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']['server']}/artifact/debian#{node['platform_version']}" },
+      %w(amazon centos redhat) => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']['server']}/artifact/#{node['aerospike']['package_suffix']}" }
     )
-  when 'enterprise'
-    package_url = value_for_platform(
+
+    tools_package_url = value_for_platform(
       'ubuntu' => {
-        '~> 14.04' => "http://www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/ubuntu14",
-        'default' => "http://www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/ubuntu12"
+        '~> 14.04' => "http://aerospike.com/download/tools/#{node['aerospike']['version']['tools']}/artifact/ubuntu14",
+        'default' => "http://aerospike.com/download/tools/#{node['aerospike']['version']['tools']}/artifact/ubuntu12"
       },
-      'debian' => { 'default' => "http://www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/debian#{node['platform_version']}" },
-      %w(amazon centos redhat) => { 'default' => "http://www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']}/artifact/#{node['aerospike']['package_suffix']}" }
+      'debian' => { 'default' => "http://aerospike.com/download/tools/#{node['aerospike']['version']['tools']}/artifact/debian#{node['platform_version']}" },
+      %w(amazon centos redhat) => { 'default' => "http://aerospike.com/download/tools/#{node['aerospike']['version']['tools']}/artifact/#{node['aerospike']['package_suffix']}" }
+    )
+
+  when 'enterprise'
+    server_package_url = value_for_platform(
+      'ubuntu' => {
+        '~> 14.04' => "http://www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']['server']}/artifact/ubuntu14",
+        'default' => "http://www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']['server']}/artifact/ubuntu12"
+      },
+      'debian' => { 'default' => "http://www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']['server']}/artifact/debian#{node['platform_version']}" },
+      %w(amazon centos redhat) => { 'default' => "http://www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']['server']}/artifact/#{node['aerospike']['package_suffix']}" }
+    )
+
+    tools_package_url = value_for_platform(
+      'ubuntu' => {
+        '~> 14.04' => "http://www.aerospike.com/enterprise/download/tools/#{node['aerospike']['version']['tools']}/artifact/ubuntu14",
+        'default' => "http://www.aerospike.com/enterprise/download/tools/#{node['aerospike']['version']['tools']}/artifact/ubuntu12"
+      },
+      'debian' => { 'default' => "http://www.aerospike.com/enterprise/download/tools/#{node['aerospike']['version']['tools']}/artifact/debian#{node['platform_version']}" },
+      %w(amazon centos redhat) => { 'default' => "http://www.aerospike.com/enterprise/download/tools/#{node['aerospike']['version']['tools']}/artifact/#{node['aerospike']['package_suffix']}" }
     )
   else
     raise "invalid aerospike edition, valid are 'community, enterprise'"
   end
 else
-  package_url = node['aerospike']['package_url']
+  server_package_url = node['aerospike']['server_package_url']
+  tools_package_url = node['aerospike']['tools_package_url']
 end
 
-package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']}-#{node['aerospike']['package_suffix']}.tgz")
-package_checksum = package_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version'], node['aerospike']['package_suffix']) if node['aerospike']['checksum_verify']
+server_package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']['server']}-#{node['aerospike']['package_suffix']}.tgz")
+tools_package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-tools-#{node['aerospike']['version']['tools']}-#{node['aerospike']['package_suffix']}.tgz")
+
+server_package_checksum = package_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version']['server'], node['aerospike']['package_suffix']) if node['aerospike']['checksum_verify']
+tools_package_checksum = tools_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version']['tools'], node['aerospike']['package_suffix']) if node['aerospike']['checksum_verify']
 
 # download tarball
-remote_file "Download #{package_file}" do
-  path package_file
-  source package_url
-  checksum package_checksum if node['aerospike']['checksum_verify']
+remote_file 'download_server_package_file' do
+  path server_package_file
+  source server_package_url
+  checksum server_package_checksum if node['aerospike']['checksum_verify']
   headers('Authorization' => "Basic #{Base64.encode64("#{node['aerospike']['enterprise']['username']}:#{node['aerospike']['enterprise']['password']}").delete("\n")}") if node['aerospike']['install_edition'] == 'enterprise'
   owner node['aerospike']['user']
   group node['aerospike']['group']
-  not_if { ::File.exist?(::File.join(node['aerospike']['source_dir'], 'asinstall')) }
+  not_if { ::File.exist?(::File.join(node['aerospike']['server_source_dir'], 'asinstall')) }
+end
+
+remote_file 'download_tools_package_file' do
+  path tools_package_file
+  source tools_package_url
+  checksum tools_package_checksum if node['aerospike']['checksum_verify']
+  headers('Authorization' => "Basic #{Base64.encode64("#{node['aerospike']['enterprise']['username']}:#{node['aerospike']['enterprise']['password']}").delete("\n")}") if node['aerospike']['install_edition'] == 'enterprise'
+  owner node['aerospike']['user']
+  group node['aerospike']['group']
+  not_if { ::File.exist?(::File.join(node['aerospike']['tools_source_dir'], 'asinstall')) }
 end
 
 # extract tarball
-execute 'extract_aerospike_package' do
+execute 'extract_server_package_file' do
   user node['aerospike']['user']
   group node['aerospike']['group']
   umask node['aerospike']['umask']
   cwd node['aerospike']['parent_dir']
-  command "tar xzf #{package_file}"
-  creates ::File.join(node['aerospike']['source_dir'], 'asinstall')
+  command "tar xzf #{server_package_file}"
+  creates ::File.join(node['aerospike']['server_source_dir'], 'asinstall')
 end
 
-remote_file "Delete #{package_file}" do
-  path package_file
+execute 'extract_tools_aerospike_package' do
+  user node['aerospike']['user']
+  group node['aerospike']['group']
+  umask node['aerospike']['umask']
+  cwd node['aerospike']['parent_dir']
+  command "tar xzf #{tools_package_file}"
+  creates ::File.join(node['aerospike']['tools_source_dir'], 'asinstall')
+end
+
+# delete tarball
+remote_file 'delete_server_package_file' do
+  path server_package_file
+  action :delete
+end
+
+remote_file 'delete_tools_package_file' do
+  path tools_package_file
   action :delete
 end
 
 server_package_file = case node['platform']
                       when 'redhat', 'amazon', 'fedora', 'centos'
-                        ::File.join(node['aerospike']['source_dir'], "aerospike-server-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']}-1.#{node['aerospike']['package_suffix']}.#{node['kernel']['machine']}.rpm")
+                        ::File.join(node['aerospike']['server_source_dir'], "aerospike-server-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']['server']}-1.#{node['aerospike']['package_suffix']}.#{node['kernel']['machine']}.rpm")
                       when 'ubuntu', 'debian'
-                        ::File.join(node['aerospike']['source_dir'], "aerospike-server-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']}.#{node['aerospike']['package_suffix']}.#{node['kernel']['machine']}.deb")
+                        ::File.join(node['aerospike']['server_source_dir'], "aerospike-server-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']['server']}.#{node['aerospike']['package_suffix']}.#{node['kernel']['machine']}.deb")
                       else
                         raise "unknown platform #{node['platform']}"
                       end
 
-# Tools package could be with a different number. Example with node['aerospike']['version']='3.8.2.3':
-# - aerospike-server-community-3.8.2.3-1.el7.x86_64.rpm
-# - aerospike-tools-3.8.2-1.el7.x86_64.rpm
-package_version = node['aerospike']['version'].split('.')[0..2].join('.')
 tools_package_file = case node['platform']
                      when 'redhat', 'amazon', 'fedora', 'centos'
-                       ::File.join(node['aerospike']['source_dir'], "aerospike-tools-#{package_version}-1.#{node['aerospike']['package_suffix']}.#{node['kernel']['machine']}.rpm")
+                       ::File.join(node['aerospike']['tools_source_dir'], "aerospike-tools-#{node['aerospike']['version']['tools']}-1.#{node['aerospike']['package_suffix']}.#{node['kernel']['machine']}.rpm")
                      when 'ubuntu', 'debian'
-                       ::File.join(node['aerospike']['source_dir'], "aerospike-tools-#{package_version}.#{node['aerospike']['package_suffix']}.#{node['kernel']['machine']}.deb")
+                       ::File.join(node['aerospike']['tools_source_dir'], "aerospike-tools-#{node['aerospike']['version']['tools']}.#{node['aerospike']['package_suffix']}.#{node['kernel']['machine']}.deb")
                      else
                        raise "unknown platform #{node['platform']}"
                      end
 
-package server_package_file do
+package 'install_server_package_file' do
   source server_package_file
   provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
 end
 
-package tools_package_file do
+package 'install_tools_package_file' do
   source tools_package_file
   provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
 end

@@ -1,6 +1,5 @@
 default['aerospike']['amc']['conf_dir'] = '/etc/amc/config'
 default['aerospike']['amc']['log_dir'] = '/var/log/amc'
-default['aerospike']['amc']['version'] = '3.6.3'
 
 default['aerospike']['amc']['service_action'] = [:enable, :start]
 

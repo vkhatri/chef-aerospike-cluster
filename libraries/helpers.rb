@@ -65,6 +65,28 @@ def package_sha256sum(edition, version, os)
   sha256sum
 end
 
+def tools_sha256sum(edition, version, os)
+  sha256sums = {
+    'community' => {
+      'ubuntu14' => {},
+      'debian7' => {},
+      'debian8' => {},
+      'el6' => {},
+      'el7' => {}
+    }
+	}
+
+  sha256sums['community']['ubuntu14']['3.10.2'] = 'b62ce954e94f94c033d0229935c8c2414b92a61851b0a7ac58782c46672e4ce6'
+  sha256sums['community']['debian7']['3.10.2'] = 'd662d5655794acf5163b93116db192475d62c55c17d240b2cc0b5d43f8b9b163'
+  sha256sums['community']['debian8']['3.10.2'] = '5a1714b982bf5a01b299a2c686b484a53997ef6bc9619473fcb89eff93a22fef'
+  sha256sums['community']['el6']['3.10.2'] = 'a631cdb02874c982fe0e045a96891219474c383ec87c09233a9bd84062d7dc5b'
+  sha256sums['community']['el7']['3.10.2'] = '9889fd4ed441e238b0c74484c374f843a0fab77366f933afa2de5e514c1347a4'
+
+  sha256sum = sha256sums[edition][os][version]
+  raise "sha256sum is missing for aerospike package edition #{edition} version #{version} os #{os}" unless sha256sum
+  sha256sum
+end
+
 def amc_package_sha256sum(edition, version, os)
   sha256sums = {
     'community' => {

@@ -37,9 +37,9 @@ case node['aerospike']['amc']['package_url']
 when 'auto'
   case node['aerospike']['install_edition']
   when 'community'
-    package_url = "http://www.aerospike.com/download/amc/#{node['aerospike']['amc']['version']}/artifact/#{package_url_suffix}"
+    package_url = "http://www.aerospike.com/download/amc/#{node['aerospike']['version']['amc']}/artifact/#{package_url_suffix}"
   when 'enterprise'
-    package_url = "http://www.aerospike.com/enterprise/download/amc/#{node['aerospike']['amc']['version']}/artifact/#{package_url_suffix}"
+    package_url = "http://www.aerospike.com/enterprise/download/amc/#{node['aerospike']['version']['amc']}/artifact/#{package_url_suffix}"
   else
     raise "invalid aerospike edition, valid are 'community, enterprise'"
   end
@@ -47,11 +47,11 @@ else
   package_url = node['aerospike']['amc']['package_url']
 end
 
-package_checksum = amc_package_sha256sum(node['aerospike']['install_edition'], node['aerospike']['amc']['version'], package_url_suffix) if node['aerospike']['checksum_verify']
-package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-amc-#{node['aerospike']['install_edition']}-#{node['aerospike']['amc']['version']}#{package_suffix}.#{node['kernel']['machine']}.#{package_type}")
+package_checksum = amc_package_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version']['amc'], package_url_suffix) if node['aerospike']['checksum_verify']
+package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-amc-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']['amc']}#{package_suffix}.#{node['kernel']['machine']}.#{package_type}")
 
 # download rpm
-remote_file "Download #{package_file}" do
+remote_file 'download_amc_package_file' do
   path package_file
   source package_url
   checksum package_checksum if node['aerospike']['checksum_verify']
@@ -64,18 +64,21 @@ node['aerospike']['amc']['packages'].each do |p|
   package p
 end
 
-package "aerospike-amc-#{node['aerospike']['install_edition']}-#{node['aerospike']['amc']['version']}#{package_suffix}" do
+package 'install_amc_package' do
+  name "aerospike-amc-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']['amc']}#{package_suffix}"
   source package_file
   provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
 end
 
-template ::File.join(node['aerospike']['amc']['conf_dir'], 'gunicorn_config.py') do
+template 'gunicorn_config.py' do
+  path ::File.join(node['aerospike']['amc']['conf_dir'], 'gunicorn_config.py')
   source 'gunicorn_config.py.erb'
   variables('config' => node['aerospike']['amc']['gunicorn_config'])
   notifies :restart, 'service[amc]' if node['aerospike']['notify_restart']
 end
 
-template ::File.join(node['aerospike']['amc']['conf_dir'], 'amc.cfg') do
+template 'amc.cfg' do
+  path ::File.join(node['aerospike']['amc']['conf_dir'], 'amc.cfg')
   source 'amc.cfg.erb'
   notifies :restart, 'service[amc]' if node['aerospike']['notify_restart']
 end

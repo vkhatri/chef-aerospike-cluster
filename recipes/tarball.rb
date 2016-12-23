@@ -20,16 +20,16 @@
 raise 'cookbook only support aerospike community edition tarball installation' if node['aerospike']['install_edition'] != 'community'
 
 tarball_url = if node['aerospike']['tarball_url'] == 'auto'
-                "http://www.aerospike.com/download/server/#{node['aerospike']['version']}/artifact/tgz"
+                "http://www.aerospike.com/download/server/#{node['aerospike']['version']['server']}/artifact/tgz"
               else
                 node['aerospike']['tarball_url']
               end
 
-tarball_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-community-#{node['aerospike']['version']}.tar.gz")
-tarball_checksum = tarball_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version']) if node['aerospike']['checksum_verify']
+tarball_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-community-#{node['aerospike']['version']['server']}.tar.gz")
+tarball_checksum = tarball_sha256sum(node['aerospike']['install_edition'], node['aerospike']['version']['server']) if node['aerospike']['checksum_verify']
 
 [
-  node['aerospike']['source_dir']
+  node['aerospike']['server_source_dir']
 ].each do |dir|
   directory dir do
     owner node['aerospike']['user']
@@ -43,16 +43,17 @@ end
 service 'aerospike' do
   service_name 'aerospike'
   action :stop
-  only_if { ::File.exist?('/etc/init.d/aerospike') && !File.exist?(node['aerospike']['source_dir']) }
+  only_if { ::File.exist?('/etc/init.d/aerospike') && !File.exist?(node['aerospike']['server_source_dir']) }
 end
 
 # download tarball
-remote_file tarball_file do
+remote_file 'download_tarball_file' do
+  path tarball_file
   source tarball_url
   checksum tarball_checksum if node['aerospike']['checksum_verify']
   owner node['aerospike']['user']
   group node['aerospike']['group']
-  not_if { ::File.exist?(::File.join(node['aerospike']['source_dir'], 'aerospike-server', 'bin', 'aerospike')) }
+  not_if { ::File.exist?(::File.join(node['aerospike']['server_source_dir'], 'aerospike-server', 'bin', 'aerospike')) }
 end
 
 # extract tarball
@@ -61,16 +62,17 @@ execute 'extract_aerospike_tarball' do
   group node['aerospike']['group']
   umask node['aerospike']['umask']
   cwd node['aerospike']['parent_dir']
-  command "tar xzf #{tarball_file} -C #{node['aerospike']['source_dir']}"
-  creates ::File.join(node['aerospike']['source_dir'], 'aerospike-server', 'bin', 'aerospike')
+  command "tar xzf #{tarball_file} -C #{node['aerospike']['server_source_dir']}"
+  creates ::File.join(node['aerospike']['server_source_dir'], 'aerospike-server', 'bin', 'aerospike')
 end
 
-remote_file tarball_file do
+remote_file 'delete_tarball_file' do
+  path tarball_file
   action :delete
 end
 
 link node['aerospike']['install_dir'] do
-  to ::File.join(node['aerospike']['source_dir'], 'aerospike-server')
+  to ::File.join(node['aerospike']['server_source_dir'], 'aerospike-server')
   action :create
 end
 
@@ -89,7 +91,7 @@ ruby_block 'purge-old-tarball' do
   block do
     require 'fileutils'
     installed_versions = Dir.entries(node['aerospike']['parent_dir']).reject { |a| a !~ /^aerospike-/ }.sort
-    old_versions = installed_versions - ["aerospike-#{node['aerospike']['version']}"]
+    old_versions = installed_versions - ["aerospike-#{node['aerospike']['version']['server']}"]
 
     old_versions.each do |v|
       v = ::File.join(node['aerospike']['parent_dir'], v)

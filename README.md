@@ -24,6 +24,21 @@ cookbook 'aerospike-cluster', github: 'vkhatri/chef-aerospike-cluster'
 https://github.com/vkhatri/chef-aerospike-cluster
 ```
 
+## Major Version Changes
+
+### Cookbook Version v0.2.0
+
+* Attribute `default['aerospike']['version']` is now, use new attributes mentioned below for Aerospike Server, Tools and AMC
+
+  - default['aerospike']['version']['server'] = '3.10.1.1'
+  - default['aerospike']['version']['tools'] = '3.10.2'
+  - default['aerospike']['version']['amc'] = '3.6.13'
+
+* Attribute `default['aerospike']['package_url']` is deprecated, use new attributes mentioned below for Aerospike Server and Tools Package URL
+
+  - default['aerospike']['server_package_url'] = 'auto'
+  - default['aerospike']['tools_package_url'] = 'auto'
+
 ## Supported OS
 
 This cookbook was tested on Amazon Linux & Ubuntu 14.04 and expected to work on other RHEL platforms.
@@ -40,7 +55,10 @@ Cookbook supports both Aerospike `Community` and `Enterprise` edition.
 
 ## Supported Aerospike Version
 
-This cookbook was tested for Aerospike v3.8.2.3. But default is 3.6.3
+This cookbook was tested for Aerospike version 3.6.3+
+
+If you find a version missing, please submit a PR or open an issue.
+
 
 
 ## TODO
@@ -76,7 +94,9 @@ This cookbook was tested for Aerospike v3.8.2.3. But default is 3.6.3
 ## Advanced Attributes
 
 
-* `default['aerospike']['version']` (default: `3.6.3`): aerospike version
+* `default['aerospike']['version']['server']` (default: `3.10.1.1`): aerospike server version
+
+* `default['aerospike']['version']['tools']` (default: `3.10.2`): aerospike tools version
 
 * `default['aerospike']['tarball_url']` (default: `auto`): aerospike tarball url
 
@@ -236,7 +256,7 @@ This cookbook was tested for Aerospike v3.8.2.3. But default is 3.6.3
 
 ## AMC Attributes
 
-* `default['aerospike']['amc']['version']` (default: `3.6.3`): amc version
+* `default['aerospike']['version']['amc']` (default: `3.8.13`): amc version
 
 * `default['aerospike']['amc']['conf_dir']` (default: `/etc/amc/config`): amc config directory
 

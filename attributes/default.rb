@@ -1,4 +1,6 @@
-default['aerospike']['version'] = '3.6.3'
+default['aerospike']['version']['server'] = '3.10.1.1'
+default['aerospike']['version']['tools'] = '3.10.2'
+default['aerospike']['version']['amc'] = '3.6.13'
 
 default['aerospike']['tarball_purge'] = false
 
@@ -24,7 +26,8 @@ default['aerospike']['work_dir']      = '/opt/aerospike'
 default['aerospike']['parent_dir'] = '/usr/local/aerospike'
 
 default['aerospike']['tarball_url'] = 'auto'
-default['aerospike']['package_url'] = 'auto'
+default['aerospike']['server_package_url'] = 'auto'
+default['aerospike']['tools_package_url'] = 'auto'
 default['aerospike']['package_suffix'] = value_for_platform(
   'ubuntu' => { '~> 14.04' => 'ubuntu14.04', 'default' => 'ubuntu12.04' },
   'debian' => { 'default' => "debian#{node['platform_version']}" },
