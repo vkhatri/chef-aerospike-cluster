@@ -10,7 +10,7 @@ This is a [Chef] cookbook to manage [Aerospike].
 ### Most Recent Release
 
 ```
-cookbook 'aerospike-cluster'
+cookbook 'aerospike-cluster', '~> 0.2.0'
 ```
 
 ### From Git
