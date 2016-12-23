@@ -24,7 +24,6 @@ driver_config:
 
 provisioner:
   name: chef_zero
-
 platforms:
   - name: ubuntu-14.04
     driver_config:
@@ -54,7 +53,6 @@ platforms:
         - rm -f /lib/systemd/system/anaconda.target.wants/*
         - sed -i 's/.*UseDNS.*/UseDNS no/g' /etc/ssh/sshd_config
         - sed -i 's/.*UsePAM.*yes/UsePAM no/g' /etc/ssh/sshd_config
-        # - sed -i 's/PasswordAuthentication.*no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
         - sed -i 's/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g' /etc/ssh/sshd_config
         - sed -i 's/.*PidFile.*/PidFile \/tmp\/sshd.pid/g' /etc/ssh/sshd_config
         - systemctl enable sshd.service
@@ -63,20 +61,18 @@ platforms:
       platform: centos
 
 suites:
-
-  - name: default
+  - name: community-package
     run_list:
       - recipe[aerospike-cluster::default]
     attributes:
       aerospike:
         checksum_verify: false
         install_method: 'package'
-        version: '3.8.2.3'
+        install_edition: 'community'
         amc:
-          version: '3.6.8'
           host: ''
 
-  - name: multicast
+  - name: community-package-multicast
     run_list:
       - recipe[aerospike-cluster::default]
       - recipe[aerospike-cluster::cluster]
@@ -84,11 +80,40 @@ suites:
       aerospike:
         checksum_verify: false
         install_method: 'package'
-        version: '3.8.2.3'
+        install_edition: 'community'
         config:
           network:
             heartbeat:
               mode: multicast
               address: '224.2.2.4'
+  - name: enterprise-package
+    run_list:
+      - recipe[aerospike-cluster::default]
+    attributes:
+      aerospike:
+        checksum_verify: false
+        install_method: 'package'
+        install_edition: 'enterprise'
+        enterprise:
+          username: null
+          password: null
         amc:
-          version: '3.6.8'
+          host: ''
+
+  - name: enterprise-package-multicast
+    run_list:
+      - recipe[aerospike-cluster::default]
+      - recipe[aerospike-cluster::cluster]
+    attributes:
+      aerospike:
+        checksum_verify: false
+        install_method: 'package'
+        install_edition: 'enterprise'
+        enterprise:
+          username: null
+          password: null
+        config:
+          network:
+            heartbeat:
+              mode: multicast
+              address: '224.2.2.4'
