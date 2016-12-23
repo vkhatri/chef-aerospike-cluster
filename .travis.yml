@@ -9,11 +9,9 @@ branches:
     - /.*-alpha.*/
 
 language: ruby
-bundler_args: --without integration development
+bundler_args: --without integration
 rvm:
-  - 2.1
-# uncomment this line if your project needs to run something other than `rake`:
-# script: bundle exec rspec spec
+  - 2.2.2
 script:
   - bundle exec rake lint
   - bundle exec rake kitchen:suite:all
