@@ -143,9 +143,11 @@ tools_package_file = case node['platform']
 package 'install_server_package_file' do
   source server_package_file
   provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
+  notifies :restart, 'service[aerospike]' if node['aerospike']['notify_restart']
 end
 
 package 'install_tools_package_file' do
   source tools_package_file
   provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
+  notifies :restart, 'service[aerospike]' if node['aerospike']['notify_restart']
 end

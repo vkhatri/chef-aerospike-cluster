@@ -73,6 +73,7 @@ end
 
 link node['aerospike']['install_dir'] do
   to ::File.join(node['aerospike']['server_source_dir'], 'aerospike-server')
+  notifies :restart, 'service[aerospike]' if node['aerospike']['notify_restart']
   action :create
 end
 

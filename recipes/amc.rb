@@ -68,6 +68,7 @@ package 'install_amc_package' do
   name "aerospike-amc-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']['amc']}#{package_suffix}"
   source package_file
   provider Chef::Provider::Package::Dpkg if node['platform_family'] == 'debian'
+  notifies :restart, 'service[amc]' if node['aerospike']['notify_restart']
 end
 
 template 'gunicorn_config.py' do
