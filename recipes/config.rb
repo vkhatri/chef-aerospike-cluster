@@ -42,7 +42,7 @@ template node['aerospike']['conf_file'] do
   source 'aerospike.conf.erb'
   owner node['aerospike']['user']
   group node['aerospike']['group']
-  mode 0644
+  mode 0o644
   variables(:config => config)
   notifies :restart, 'service[aerospike]' if node['aerospike']['notify_restart']
 end

@@ -83,7 +83,7 @@ template '/etc/init.d/aerospike' do
   source 'initd.erb'
   owner 'root'
   group 'root'
-  mode 0750
+  mode 0o750
   notifies :restart, 'service[aerospike]', :delayed if node['aerospike']['notify_restart']
 end
 
