@@ -30,15 +30,6 @@ when 'auto'
       %w(amazon centos redhat) => { 'default' => "http://aerospike.com/download/server/#{node['aerospike']['version']['server']}/artifact/#{node['aerospike']['package_suffix']}" }
     )
 
-    tools_package_url = value_for_platform(
-      'ubuntu' => {
-        '~> 14.04' => "http://aerospike.com/download/tools/#{node['aerospike']['version']['tools']}/artifact/ubuntu14",
-        'default' => "http://aerospike.com/download/tools/#{node['aerospike']['version']['tools']}/artifact/ubuntu12"
-      },
-      'debian' => { 'default' => "http://aerospike.com/download/tools/#{node['aerospike']['version']['tools']}/artifact/debian#{node['platform_version']}" },
-      %w(amazon centos redhat) => { 'default' => "http://aerospike.com/download/tools/#{node['aerospike']['version']['tools']}/artifact/#{node['aerospike']['package_suffix']}" }
-    )
-
   when 'enterprise'
     server_package_url = value_for_platform(
       'ubuntu' => {
@@ -49,14 +40,6 @@ when 'auto'
       %w(amazon centos redhat) => { 'default' => "http://www.aerospike.com/enterprise/download/server/#{node['aerospike']['version']['server']}/artifact/#{node['aerospike']['package_suffix']}" }
     )
 
-    tools_package_url = value_for_platform(
-      'ubuntu' => {
-        '~> 14.04' => "http://www.aerospike.com/enterprise/download/tools/#{node['aerospike']['version']['tools']}/artifact/ubuntu14",
-        'default' => "http://www.aerospike.com/enterprise/download/tools/#{node['aerospike']['version']['tools']}/artifact/ubuntu12"
-      },
-      'debian' => { 'default' => "http://www.aerospike.com/enterprise/download/tools/#{node['aerospike']['version']['tools']}/artifact/debian#{node['platform_version']}" },
-      %w(amazon centos redhat) => { 'default' => "http://www.aerospike.com/enterprise/download/tools/#{node['aerospike']['version']['tools']}/artifact/#{node['aerospike']['package_suffix']}" }
-    )
   else
     raise "invalid aerospike edition, valid are 'community, enterprise'"
   end
@@ -64,6 +47,15 @@ else
   server_package_url = node['aerospike']['server_package_url']
   tools_package_url = node['aerospike']['tools_package_url']
 end
+
+tools_package_url = value_for_platform(
+  'ubuntu' => {
+    '~> 14.04' => "http://aerospike.com/download/tools/#{node['aerospike']['version']['tools']}/artifact/ubuntu14",
+    'default' => "http://aerospike.com/download/tools/#{node['aerospike']['version']['tools']}/artifact/ubuntu12"
+  },
+  'debian' => { 'default' => "http://aerospike.com/download/tools/#{node['aerospike']['version']['tools']}/artifact/debian#{node['platform_version']}" },
+  %w(amazon centos redhat) => { 'default' => "http://aerospike.com/download/tools/#{node['aerospike']['version']['tools']}/artifact/#{node['aerospike']['package_suffix']}" }
+)
 
 server_package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-server-#{node['aerospike']['install_edition']}-#{node['aerospike']['version']['server']}-#{node['aerospike']['package_suffix']}.tgz")
 tools_package_file = ::File.join(node['aerospike']['parent_dir'], "aerospike-tools-#{node['aerospike']['version']['tools']}-#{node['aerospike']['package_suffix']}.tgz")
