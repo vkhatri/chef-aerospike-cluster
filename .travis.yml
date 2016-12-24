@@ -9,9 +9,10 @@ branches:
     - /.*-alpha.*/
 
 language: ruby
-bundler_args: --without integration
+# bundler_args: --without integration
 rvm:
   - 2.2.2
 script:
   - bundle exec rake lint
-  - bundle exec rake kitchen:suite:all
+  - bundle exec rake kitchen:suite:community_package_all
+  - bundle exec rake kitchen:suite:community_tarball_all

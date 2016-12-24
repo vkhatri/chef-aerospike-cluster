@@ -65,8 +65,18 @@ namespace 'kitchen:suite' do
       instances.map(&:destroy)
     end
   end
+
   desc 'Run all test suites'
   task :all => Kitchen::Config.new.suites.map(&:name).map {|s| 'kitchen:suite:' + s}
+
+  desc 'Run community-* test suites'
+  task :community_all => Kitchen::Config.new.suites.get_all(/community/).map(&:name).map {|s| 'kitchen:suite:' + s}
+
+  desc 'Run community-tarball-* test suites'
+  task :community_tarball_all => Kitchen::Config.new.suites.get_all(/community-tarball/).map(&:name).map {|s| 'kitchen:suite:' + s}
+
+  desc 'Run community-package-* test suites'
+  task :community_package_all => Kitchen::Config.new.suites.get_all(/community-package/).map(&:name).map {|s| 'kitchen:suite:' + s}
 end
 
 

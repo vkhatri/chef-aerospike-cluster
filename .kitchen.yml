@@ -24,6 +24,7 @@ driver_config:
 
 provisioner:
   name: chef_zero
+
 platforms:
   - name: ubuntu-14.04
     driver_config:
@@ -61,6 +62,17 @@ platforms:
       platform: centos
 
 suites:
+  - name: default
+    run_list:
+      - recipe[aerospike-cluster::default]
+    attributes:
+      aerospike:
+        checksum_verify: false
+        install_method: 'package'
+        install_edition: 'community'
+        amc:
+          host: ''
+
   - name: community-package
     run_list:
       - recipe[aerospike-cluster::default]
@@ -80,6 +92,31 @@ suites:
       aerospike:
         checksum_verify: false
         install_method: 'package'
+        install_edition: 'community'
+        config:
+          network:
+            heartbeat:
+              mode: multicast
+              address: '224.2.2.4'
+  - name: community-tarball
+    run_list:
+      - recipe[aerospike-cluster::default]
+    attributes:
+      aerospike:
+        checksum_verify: false
+        install_method: 'tarball'
+        install_edition: 'community'
+        amc:
+          host: ''
+
+  - name: community=tarball-multicast
+    run_list:
+      - recipe[aerospike-cluster::default]
+      - recipe[aerospike-cluster::cluster]
+    attributes:
+      aerospike:
+        checksum_verify: false
+        install_method: 'tarball'
         install_edition: 'community'
         config:
           network:
