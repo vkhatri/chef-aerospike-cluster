@@ -4,6 +4,13 @@ aerospike-cluster CHANGELOG
 This file is used to list changes made in each version of the aerospike-cluster cookbook.
 
 ------------------
+0.2.1 (12/24/2016)
+------------------
+- [Virender Khatri](https://github.com/vkhatri):
+  - Fixed Travis Kitchen Rake
+  - Fix for #24, make tools url generic
+
+------------------
 0.2.0 (12/23/2016)
 ------------------
 - [Virender Khatri](https://github.com/vkhatri):

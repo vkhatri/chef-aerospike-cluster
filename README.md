@@ -10,7 +10,7 @@ This is a [Chef] cookbook to manage [Aerospike].
 ### Most Recent Release
 
 ```
-cookbook 'aerospike-cluster', '~> 0.2.0'
+cookbook 'aerospike-cluster', '~> 0.2.1'
 ```
 
 ### From Git
@@ -25,6 +25,11 @@ https://github.com/vkhatri/chef-aerospike-cluster
 ```
 
 ## Major Version Changes
+
+### Cookbook Version v0.2.1
+
+Tools package download URL updated to `http://www.aerospike.com/download/tools/VERSION` for both `enterprise` and `community` edition.
+
 
 ### Cookbook Version v0.2.0
 
